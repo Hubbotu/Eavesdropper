@@ -75,7 +75,7 @@ end
 local function GetBattleNetCharacterFullName(gameAccountInfo)
 	local characterName = gameAccountInfo.characterName;
 	local realmName = gameAccountInfo.realmName;
-	local sender = string.join("-", characterName or UNKNOWNOBJECT, realmName or GetNormalizedRealmName());
+	local sender = ED.Utils.ComposeSender(characterName, realmName);
 	local guid = gameAccountInfo.playerGuid;
 
 	if string.find(sender, UNKNOWNOBJECT, 1, true) == 1 then
@@ -94,7 +94,7 @@ local function ResolveCharacterData(contextData)
 	local unit = contextData.unit;
 	local name = contextData.name;
 	local server = contextData.server;
-	local sender = string.join("-", name or UNKNOWNOBJECT, server or GetNormalizedRealmName());
+	local sender = ED.Utils.ComposeSender(name, server);
 	local guid = contextData.playerLocation and contextData.playerLocation.guid;
 
 	if UnitExists(unit) then

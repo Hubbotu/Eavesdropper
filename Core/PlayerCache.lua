@@ -123,7 +123,7 @@ function PlayerCache:InsertAndRetrieve(sender, guid)
 
 	if not Utils.HasRealmSuffix(sender) then
 		for fullName, entry in pairs(self.bySender) do
-			if fullName:match("^" .. sender .. "%-") then
+			if Utils.MatchesBareName(fullName, sender) then
 				sender = fullName;
 				-- The cached guid may belong to a deleted-and-recreated character; this call's is fresher.
 				guid = guid or entry.guid;
@@ -133,11 +133,12 @@ function PlayerCache:InsertAndRetrieve(sender, guid)
 	end
 
 	-- Migrate history entries stored under the bare name to the full Name-Realm key.
+	-- Regional names have no bare form to migrate.
 	if ED.ChatHistory and Utils.HasRealmSuffix(sender) then
 		local bareName = Utils.StripRealmSuffix(sender);
 		local bareHistory = ED.ChatHistory.history[bareName];
 
-		if bareHistory and #bareHistory > 0 then
+		if bareName ~= sender and bareHistory and #bareHistory > 0 then
 			local target = ED.ChatHistory.history[sender] or {};
 			ED.ChatHistory.history[sender] = target;
 
@@ -169,7 +170,7 @@ function PlayerCache:InsertAndRetrieve(sender, guid)
 	if Utils.HasRealmSuffix(sender) then
 		local bareName = Utils.StripRealmSuffix(sender);
 		local bareEntry = self.bySender[bareName];
-		if bareEntry then
+		if bareEntry and bareName ~= sender then
 			RemoveByTimeSlot(bareEntry.time);
 			self.bySender[bareName] = nil;
 			if not guid and bareEntry.guid then
@@ -217,7 +218,7 @@ function PlayerCache:GetSenderEntry(name)
 	local bareName = name:match("^([^%-]+)");
 	if bareName then
 		for fullName, data in pairs(self.bySender) do
-			if fullName:match("^" .. bareName .. "%-") then
+			if Utils.MatchesBareName(fullName, bareName) then
 				return data;
 			end
 		end
@@ -236,7 +237,7 @@ function PlayerCache:GetSenderEntryByTime(name)
 		local data = self.byTime[t];
 		if data and data.sender then
 			local sender = data.sender;
-			if sender == name or sender:match("^" .. bareName .. "%-") then
+			if sender == name or Utils.MatchesBareName(sender, bareName) then
 				return sender, self.bySender[sender];
 			end
 		end
@@ -253,12 +254,9 @@ function PlayerCache:GetSenderDataFromGUID(guid)
 	local entry = self.byGUID[guid];
 	if entry then return entry.sender; end
 
-	local _, _, _, _, _, name, realm = GetPlayerInfoByGUID(guid);
-	if not name then return; end
-	if not realm or realm == "" then realm = GetNormalizedRealmName(); end
-	if not realm then return; end
+	local sender = Utils.GetSenderFromGUID(guid);
+	if not sender then return; end
 
-	local sender = name .. "-" .. realm;
 	self:InsertAndRetrieve(sender, guid);
 	return sender;
 end
@@ -349,7 +347,7 @@ end
 ---@return string? guid
 local function FindUnitByName(units, bareName)
 	for _, unitData in ipairs(units) do
-		if unitData.sender:match("^" .. bareName .. "%-") then
+		if Utils.MatchesBareName(unitData.sender, bareName) then
 			return unitData.sender, unitData.guid;
 		end
 	end

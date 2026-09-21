@@ -157,6 +157,11 @@ stds.wow = {
 
 		Constants = {
 			fields = {
+				CharacterNameSeparatorConsts = {
+					fields = {
+						"CHARACTERNAME_SURNAME_SEPARATOR",
+					},
+				},
 				PetConsts = {
 					fields = {
 						"NUM_PET_SLOTS",
@@ -685,6 +690,7 @@ stds.wow = {
 		"PlaySoundFile",
 		"RaidNotice_AddMessage",
 		"RaidWarningFrame",
+		"RegionalUniqueNamesEnabled",
 		"ReloadUI",
 		"RemoveChatWindowChannel",
 		"ResetCursor",
@@ -767,6 +773,7 @@ stds.wow = {
 		"UnitIsUnit",
 		"UnitLevel",
 		"UnitName",
+		"UnitNameFromGUID",
 		"UnitNameUnmodified",
 		"UnitOwnerGUID",
 		"UnitPlayerControlled",

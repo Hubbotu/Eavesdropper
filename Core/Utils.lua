@@ -4,6 +4,15 @@
 ---@class EavesdropperUtils
 local Utils = {};
 
+---True where character names are region-unique ("Given Family", no realm), e.g. Forever.
+local IS_REGIONAL_NAMES = (RegionalUniqueNamesEnabled and RegionalUniqueNamesEnabled()) and true or false;
+local SURNAME_SEPARATOR = Constants.CharacterNameSeparatorConsts and Constants.CharacterNameSeparatorConsts.CHARACTERNAME_SURNAME_SEPARATOR or " ";
+
+---@return boolean
+function Utils.IsRegionalNames()
+	return IS_REGIONAL_NAMES;
+end
+
 -- ============================================================================
 -- COLOR UTILITIES
 -- ============================================================================
@@ -163,12 +172,14 @@ end
 ---@return string?
 function Utils.GetCharacterNameFromEmote(msg)
 	if type(msg) ~= "string" then return; end
+	if IS_REGIONAL_NAMES then return; end -- No realm to extract.
 	return msg:match("^([^%s]+%-[^%s]+)");
 end
 
 -- RANDOM_ROLL_RESULT: "%s rolls %d (%d-%d)"
+-- Regional names contain a space, so the name can't be captured as a single non-space run.
 local SYSTEM_ROLL_PATTERN = RANDOM_ROLL_RESULT;
-SYSTEM_ROLL_PATTERN = SYSTEM_ROLL_PATTERN:gsub("%%%d?$?s", "(%%S+)");
+SYSTEM_ROLL_PATTERN = SYSTEM_ROLL_PATTERN:gsub("%%%d?$?s", IS_REGIONAL_NAMES and "(.-)" or "(%%S+)");
 SYSTEM_ROLL_PATTERN = SYSTEM_ROLL_PATTERN:gsub("%%%d?$?d", "(%%d+)");
 SYSTEM_ROLL_PATTERN = SYSTEM_ROLL_PATTERN:gsub("%(%(%%%d?$?d%+%)%-%(%%%d?$?d%+%)%)", "%%((%%d+)%%-(%%d+)%%)");
 
@@ -188,17 +199,40 @@ end
 -- UNIT / PLAYER UTILITIES
 -- ============================================================================
 
----GetUnitName Returns the normalized "Name-Realm" string for a given unit
+---Composes "Given Family" from a name and family name. Own-player names arrive combined, others split.
+---@param name string?
+---@param family string?
+---@return string?
+local function ComposeRegionalName(name, family)
+	if not canaccessvalue(name) or not canaccessvalue(family) then return; end
+	if not name or name == "" or name == UNKNOWNOBJECT then return; end
+
+	if not family or family == "" or name:find(SURNAME_SEPARATOR, 1, true) then
+		return name;
+	end
+
+	return name .. SURNAME_SEPARATOR .. family;
+end
+
+---GetUnitName Returns the normalized "Name-Realm" string for a given unit ("Given Family" in regional mode)
 ---@param unit string? Unit token
 ---@return string?
 function Utils.GetUnitName(unit)
 	local playerName, realm = UnitNameUnmodified(unit or "player");
+
+	if IS_REGIONAL_NAMES then
+		playerName = ComposeRegionalName(playerName, realm);
+	end
 
 	if not canaccessvalue(playerName) or not playerName or playerName == UNKNOWNOBJECT or playerName:len() == 0 then
 		if unit and unit ~= "player" then
 			return Utils.GetUnitName("player");
 		end
 		return nil;
+	end
+
+	if IS_REGIONAL_NAMES then
+		return playerName;
 	end
 
 	if not realm or realm:len() == 0 then
@@ -212,9 +246,11 @@ function Utils.GetUnitName(unit)
 	return nil;
 end
 
+---In regional mode, any non-empty name counts as qualified.
 ---@param name string?
 ---@return boolean
 function Utils.HasRealmSuffix(name)
+	if IS_REGIONAL_NAMES then return type(name) == "string" and name ~= ""; end
 	return type(name) == "string" and name:find("%-.+") ~= nil;
 end
 
@@ -222,6 +258,7 @@ end
 ---@return boolean
 function Utils.IsSameRealmName(name)
 	if type(name) ~= "string" then return false; end
+	if IS_REGIONAL_NAMES then return true; end
 	local realm = GetNormalizedRealmName();
 	if not realm then return false; end
 	return name:find("%-" .. realm .. "$") ~= nil;
@@ -231,6 +268,7 @@ end
 ---@return string
 function Utils.StripRealmSuffix(name)
 	if type(name) ~= "string" then return ""; end
+	if IS_REGIONAL_NAMES then return name; end
 	return name:match("^(.-)%-.+$") or name;
 end
 
@@ -239,8 +277,45 @@ end
 ---@return string
 function Utils.AddRealmSuffix(name)
 	if type(name) ~= "string" or name == "" then return ""; end
+	if IS_REGIONAL_NAMES then return name; end
 	if name:find("-", 1, true) then return name; end
 	return name .. "-" .. GetRealmName():gsub("[%s%-%.]*", "");
+end
+
+---True if sender is bareName plus a realm. Regional names only match exactly.
+---@param sender string
+---@param bareName string
+---@return boolean
+function Utils.MatchesBareName(sender, bareName)
+	if IS_REGIONAL_NAMES then return sender == bareName; end
+	return sender:match("^" .. bareName .. "%-") ~= nil;
+end
+
+---Builds a sender key from a name and realm (regional: "Given Family", no realm).
+---@param name string?
+---@param realm string?
+---@return string
+function Utils.ComposeSender(name, realm)
+	if IS_REGIONAL_NAMES then
+		return ComposeRegionalName(name, realm) or UNKNOWNOBJECT;
+	end
+	return string.join("-", name or UNKNOWNOBJECT, realm or GetNormalizedRealmName());
+end
+
+---Resolves a sender key from a GUID. Regional mode skips GetPlayerInfoByGUID, which only has the given name.
+---@param guid string
+---@return string?
+function Utils.GetSenderFromGUID(guid)
+	if IS_REGIONAL_NAMES then
+		return ComposeRegionalName(UnitNameFromGUID(guid));
+	end
+
+	local _, _, _, _, _, name, realm = GetPlayerInfoByGUID(guid);
+	if not name then return; end
+	if not realm or realm == "" then realm = GetNormalizedRealmName(); end
+	if not realm then return; end
+
+	return name .. "-" .. realm;
 end
 
 ---IsOwnPlayer Checks if the sender is the current player.

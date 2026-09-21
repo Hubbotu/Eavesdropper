@@ -1,4 +1,4 @@
-## Interface: 120100
+## Interface: 120100, 16001
 ## Title: |cnFRAMESTACK_REGION_COLOR:Eavesdropper|r
 ## Notes: Shows a Main Window for your target, mouseover, or focus, plus Dedicated, Group, and Mentions windows, keyword highlights, and advanced RP name formatting.
 ## Author: Raenore (Argent Dawn EU)
@@ -22,7 +22,8 @@
 ## Category-zhCN: 角色扮演
 ## Category-zhTW: 角色扮演
 
-## X-Build: 120100
+## X-Build: 120100 [AllowLoadGameType standard]
+## X-Build: 16001 [AllowLoadGameType camelot]
 ## X-Category: Roleplay, Chat
 
 ## X-Curse-Project-ID: 1468933
