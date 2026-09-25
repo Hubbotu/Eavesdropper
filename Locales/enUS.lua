@@ -168,6 +168,8 @@ L = {
 
 	TITLE_BAR_TARGET_NAME = "Title Bar Target Name",
 	TITLE_BAR_TARGET_NAME_HELP = "Replaces the 'Eavesdropper' label in the title bar with the name of your current target. This provides a quick visual confirmation of which character's history is currently being tracked.",
+	TITLE_BAR_FULL_NAME = "Title Bar Full Name",
+	TITLE_BAR_FULL_NAME_HELP = "Shows the full name in the title bar instead of just the first name. Also applies to Dedicated windows, which always show a name.|n|n- With RP data, this is the full RP name, otherwise the character name.",
 
 	WELCOME_MSG = "Startup message",
 	WELCOME_MSG_HELP = "Toggles the display of the welcome message.",

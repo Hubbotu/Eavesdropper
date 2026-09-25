@@ -144,6 +144,7 @@ local GLOBAL_IMPORT_EXCLUDED = {
 ---@field TargetOnly boolean?
 ---@field TargetPriority EavesdropperTargetPriority?
 ---@field TimestampBrackets boolean?
+---@field TitleBarFullName boolean?
 ---@field UpdateTitleBarWithName boolean?
 ---@field UseRPName boolean?
 ---@field UseRPFirstName boolean?
@@ -217,6 +218,7 @@ local DEFAULT_PROFILE = {
 	TargetOnly = false,
 	TargetPriority = Enums.TARGET_PRIORITY.PRIORITIZE_MOUSEOVER,
 	TimestampBrackets = true,
+	TitleBarFullName = ED.Utils.IsRegionalNames(),
 	UpdateTitleBarWithName = false,
 	UseRPName = true,
 	UseRPFirstName = false,
@@ -675,6 +677,7 @@ end
 ---| "TargetOnly"
 ---| "TargetPriority"
 ---| "TimestampBrackets"
+---| "TitleBarFullName"
 ---| "UpdateTitleBarWithName"
 ---| "UseRPName"
 ---| "UseRPFirstName"

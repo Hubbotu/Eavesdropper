@@ -600,6 +600,20 @@ function Eavesdropper_SettingsMixin:OnLoad()
 		},
 		{
 			type = "checkbox",
+			label = L.TITLE_BAR_FULL_NAME,
+			tooltip = L.TITLE_BAR_FULL_NAME_HELP,
+			buildAdded = "0.7.0|120100",
+			get = function() return ED.Database:GetSetting("TitleBarFullName"); end,
+			set = function(val)
+				ED.Database:SetSetting("TitleBarFullName", val);
+				ED.Frame:UpdateTitleBar();
+				ED.DedicatedFrame:ForEachFrame(function(frame)
+					frame:UpdateTitleBar();
+				end);
+			end,
+		},
+		{
+			type = "checkbox",
 			global = true,
 			label = L.NEW_WINDOWS_NEW_INDICATOR,
 			tooltip = L.NEW_WINDOWS_NEW_INDICATOR_HELP,

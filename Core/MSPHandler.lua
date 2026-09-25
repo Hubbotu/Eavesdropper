@@ -356,6 +356,24 @@ function MSP.TryGetMSPData(playerName, playerGUID, forceInvalidate)
 	return fullName, firstName, nameColor, lastName, className, raceName;
 end
 
+---Resolves the title bar text for a player: full name, or first name only.
+---@param playerName string
+---@param playerGUID string?
+---@param showFullName boolean
+---@return string
+function MSP.GetTitleBarName(playerName, playerGUID, showFullName)
+	local fullName, firstName = MSP.TryGetMSPData(playerName, playerGUID);
+	local name;
+
+	if showFullName then
+		name = fullName or ED.Utils.StripRealmSuffix(playerName);
+	else
+		name = firstName or ED.Utils.GetGivenName(playerName);
+	end
+
+	return ED.Utils.StripColorCodes(name);
+end
+
 ---Pending debounce ticker for MSP field update callbacks.
 ---@type table?
 local pendingRefresh;

@@ -272,6 +272,18 @@ function Utils.StripRealmSuffix(name)
 	return name:match("^(.-)%-.+$") or name;
 end
 
+---Returns the name before the surname separator (regional) or before the realm suffix.
+---@param name string?
+---@return string
+function Utils.GetGivenName(name)
+	if type(name) ~= "string" then return ""; end
+	if IS_REGIONAL_NAMES then
+		local separatorStart = name:find(SURNAME_SEPARATOR, 2, true);
+		return separatorStart and name:sub(1, separatorStart - 1) or name;
+	end
+	return Utils.StripRealmSuffix(name);
+end
+
 ---Appends the home realm to a name with none, normalized to match Chomp.NameMergedRealm.
 ---@param name string?
 ---@return string

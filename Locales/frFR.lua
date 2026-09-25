@@ -169,6 +169,8 @@ L = {
 
 	TITLE_BAR_TARGET_NAME = "Nom de la cible dans la barre de titre",
 	TITLE_BAR_TARGET_NAME_HELP = "Remplace l'intitulé 'Eavesdropper' dans la barre de titre par le nom de votre cible actuelle. Cela fournit une confirmation visuelle rapide du personnage dont vous consultez l'historique.",
+	TITLE_BAR_FULL_NAME = "Nom complet dans la barre de titre",
+	TITLE_BAR_FULL_NAME_HELP = "Affiche le nom complet dans la barre de titre au lieu du prénom seul. S'applique aussi aux fenêtres individuelles, qui affichent toujours un nom.|n|n- Avec des données RP, il s'agit du nom RP complet, sinon du nom du personnage.",
 
 	WELCOME_MSG = "Message de démarrage",
 	WELCOME_MSG_HELP = "Active l'affichage du message de démarrage.",

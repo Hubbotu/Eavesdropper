@@ -169,6 +169,8 @@ L = {
 
 	TITLE_BAR_TARGET_NAME = "Имя цели в заголовке",
 	TITLE_BAR_TARGET_NAME_HELP = "Заменяет название «Eavesdropper» в заголовке на имя вашей текущей цели. Позволяет быстро понять, чью историю вы сейчас просматриваете.",
+	TITLE_BAR_FULL_NAME = "Title Bar Full Name", -- NEW
+	TITLE_BAR_FULL_NAME_HELP = "Shows the full name in the title bar instead of just the first name. Also applies to Dedicated windows, which always show a name.|n|n- With RP data, this is the full RP name, otherwise the character name.", -- NEW
 
 	WELCOME_MSG = "Сообщение при запуске",
 	WELCOME_MSG_HELP = "Показывать ли приветствие в чате при загрузке аддона.|n|n* Это общая настройка для всех профилей.",
