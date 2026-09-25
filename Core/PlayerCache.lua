@@ -215,7 +215,7 @@ function PlayerCache:GetSenderEntry(name)
 	local entry = self.bySender[name];
 	if entry then return entry; end
 
-	local bareName = name:match("^([^%-]+)");
+	local bareName = Utils.StripRealmSuffix(name);
 	if bareName then
 		for fullName, data in pairs(self.bySender) do
 			if Utils.MatchesBareName(fullName, bareName) then
@@ -231,7 +231,7 @@ end
 ---@return PlayerCacheEntryBySender? entry
 function PlayerCache:GetSenderEntryByTime(name)
 	if not name or name == "" then return; end
-	local bareName = name:match("^([^%-]+)") or name;
+	local bareName = Utils.StripRealmSuffix(name);
 
 	for _, t in ipairs(sortedTimes) do
 		local data = self.byTime[t];
@@ -446,14 +446,14 @@ function PlayerCache:ResolveEmoteSender(message, sourceSender)
 
 	local sourceBare;
 	if sourceSender and sourceSender ~= "" then
-		sourceBare = sourceSender:match("^([^%-]+)");
+		sourceBare = Utils.StripRealmSuffix(sourceSender);
 	end
 
 	for _, t in ipairs(sortedTimes) do
 		local data = self.byTime[t];
 		if data and data.sender then
 			local sender = data.sender;
-			local bareName = sender:match("^([^%-]+)");
+			local bareName = Utils.StripRealmSuffix(sender);
 
 			-- Skip the emote's own sender (both bare and full comparison).
 			if bareName and sender ~= sourceSender and bareName ~= sourceBare and IsWholeWordMatch(message, bareName) then
@@ -464,7 +464,7 @@ function PlayerCache:ResolveEmoteSender(message, sourceSender)
 
 	for _, unitData in ipairs(GetLiveTargetUnits()) do
 		local sender = unitData.sender;
-		local bareName = sender:match("^([^%-]+)");
+		local bareName = Utils.StripRealmSuffix(sender);
 
 		if bareName and sender ~= sourceSender and bareName ~= sourceBare and IsWholeWordMatch(message, bareName) then
 			-- Persist so a later reformat (e.g. reopening a dedicated window) hits byTime directly.

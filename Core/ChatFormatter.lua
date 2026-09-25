@@ -354,7 +354,7 @@ end
 ---@param replacement string
 ---@return string
 local function SubstituteNameOccurrence(msgText, rawName, replacement)
-	local bareName = rawName:match("^([^%-]+)");
+	local bareName = ED.Utils.StripRealmSuffix(rawName);
 
 	local newText = ReplaceNameHyperlink(msgText, rawName, replacement)
 		or (bareName and ReplaceNameHyperlink(msgText, bareName, replacement));
@@ -392,7 +392,7 @@ local function FormatTextEmoteTargetWithRPName(entry, msgText, forceDisplayMode)
 	end
 
 	if not sender then return msgText; end
-	local bareName = sender:match("^([^%-]+)");
+	local bareName = ED.Utils.StripRealmSuffix(sender);
 	if entry.s == bareName or entry.s == sender then return msgText; end
 
 	local nameDisplayMode = forceDisplayMode or ED.Database:GetSetting("NameDisplayMode");

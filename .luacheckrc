@@ -159,6 +159,7 @@ stds.wow = {
 			fields = {
 				CharacterNameSeparatorConsts = {
 					fields = {
+						"CHARACTERNAME_REALMNAME_SEPARATOR",
 						"CHARACTERNAME_SURNAME_SEPARATOR",
 					},
 				},
@@ -507,6 +508,13 @@ stds.wow = {
 			fields = {
 				"CancelButtonAnchor",
 				"GearButtonAnchor",
+			},
+		},
+
+		NameUtil = {
+			fields = {
+				"GetFullNameWithoutRealm",
+				"SplitPlayerNameIntoParts",
 			},
 		},
 
