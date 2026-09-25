@@ -177,7 +177,7 @@ local DEFAULT_PROFILE = {
 	HideInCombat = false,
 	HideWhenEmpty = false,
 	HighlightColor = { r = 0, g = 1, b = 0 },
-	HighlightKeywords = "<firstname>, <lastname>, <oocname>",
+	HighlightKeywords = ED.Utils.IsRegionalNames() and "<firstname>, <lastname>, <oocfirstname>" or "<firstname>, <lastname>, <oocname>",
 	HighlightMessages = false,
 	LockScroll = false,
 	LockTitleBar = false,

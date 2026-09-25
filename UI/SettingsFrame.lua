@@ -1277,7 +1277,7 @@ function Eavesdropper_SettingsMixin:OnLoad()
 		{
 			type = "editbox_multiline",
 			label = L.KEYWORDS_LIST,
-			tooltip = L.KEYWORDS_LIST_HELP,
+			tooltip = L.KEYWORDS_LIST_HELP:format(ED.Utils.IsRegionalNames() and L.KEYWORDS_LIST_HELP_OOC_PARTS or ""),
 			height = 100,
 			get = function() return ED.Database:GetSetting("HighlightKeywords"); end,
 			set = function(val)
