@@ -308,7 +308,8 @@ function Database:Init()
 	local playerKey = ED.Utils.GetUnitName();
 	local profileName = db.profileKeys[playerKey] or Constants.DEFAULT_PROFILE_NAME;
 
-	ED.Globals.player_character_name = UnitName("player");
+	-- Given name only: NPCs on Forever address "Firstname Lastname" as "Firstname".
+	ED.Globals.player_character_name = ED.Utils.GetGivenName(UnitName("player"));
 	ED.Globals.player_sender_name = playerKey;
 	ED.Globals.player_guid = UnitGUID("player");
 
