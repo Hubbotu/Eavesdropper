@@ -7,9 +7,9 @@ local PlayerName = {};
 ---Default to the OOC character name until MSP data is available.
 PlayerName.preferredName = ED.Globals.player_character_name;
 
----Refreshes the cached preferred name from MSP data, falling back to the OOC name.
+---Refreshes the cached preferred name from MSP data, falling back to the OOC given name (Forever also just uses given).
 function PlayerName.RefreshPlayerPreferredName()
-	PlayerName.preferredName = ED.Globals.player_character_name;
+	PlayerName.preferredName = ED.Utils.GetGivenName(ED.Globals.player_character_name);
 
 	-- Request MSP data with a cache bust to make sure we get latest.
 	local fullName, firstName = ED.MSP.TryGetMSPData(ED.Utils.GetUnitName(), ED.Globals.player_guid);
