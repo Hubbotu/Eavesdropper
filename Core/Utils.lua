@@ -274,10 +274,12 @@ function Utils.StripRealmSuffix(name)
 end
 
 ---Returns the name before the surname separator (regional) or before the realm suffix.
+---NameUtil only exists on regional clients such as Forever, so Standard strips the realm itself.
 ---@param name string?
 ---@return string
 function Utils.GetGivenName(name)
 	if type(name) ~= "string" then return ""; end
+	if not IS_REGIONAL_NAMES then return Utils.StripRealmSuffix(name); end
 	return NameUtil.SplitPlayerNameIntoParts(name) or name;
 end
 
