@@ -39,8 +39,11 @@ function PlayerName.SubstitutePlayerPreferredName(sourceText)
 		return sourceText;
 	end
 
+	-- Given name only: NPCs on Forever address "Heals Found" as "Heals".
+	local characterName = ED.Utils.GetGivenName(ED.Globals.player_character_name);
+
 	-- Escape certain characters that could be in names like - and . (Mary-Sue, J.W.).
-	local escapedName = ED.Globals.player_character_name:gsub("([%(%)%.%%%+%-%*%?%[%^%$])", "%%%1");
+	local escapedName = characterName:gsub("([%(%)%.%%%+%-%*%?%[%^%$])", "%%%1");
 	return sourceText:gsub(escapedName, PlayerName.preferredName);
 end
 
