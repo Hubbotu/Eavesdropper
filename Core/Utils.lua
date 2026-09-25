@@ -471,18 +471,20 @@ function Utils.ValidateLatestBuild()
 	return false;
 end
 
----FormatBuild Formats a build version as major.minor.patch
+---Formats an interface number as major.minor.patch (120100 is 12.1.0, 16001 is 1.60.1, etc).
 ---@param build string
 ---@return string
 local function FormatBuild(build)
-	build = tostring(build);
-	local major = tonumber(string.sub(build, 1, 2));
-	local minor = tonumber(string.sub(build, 3, 4));
-	local patch = tonumber(string.sub(build, 5, 6));
+	local interface = tonumber(string.match(tostring(build), "%d+"));
+	if not interface then return tostring(build); end
+
+	local major = math.floor(interface / 10000);
+	local minor = math.floor(interface / 100) % 100;
+	local patch = interface % 100;
 	return major .. "." .. minor .. "." .. patch;
 end
 
----OutputBuild Returns the addon's build version, optionally colorized
+---Returns the addon's build version, optionally colorized.
 ---@param colorized boolean
 ---@return string
 function Utils.OutputBuild(colorized)
