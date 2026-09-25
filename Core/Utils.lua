@@ -596,7 +596,7 @@ function Utils.CreatePriorityString(targetPriority, focusTarget)
 end
 
 ---Determines if a feature should be considered newly added.
----Supports single version (0.3.0) or version range (0.3.0-0.4.0).
+---Supports a version (0.3.0) or range (0.3.0-0.4.0), and one build per flavor (120100,16001).
 ---@param buildAdded string
 ---@return boolean
 function Utils.CheckNewlyAdded(buildAdded)
@@ -605,7 +605,13 @@ function Utils.CheckNewlyAdded(buildAdded)
 
 	-- In dev builds, match solely on the Blizzard build number
 	if ED.Globals.addon_version == "@project-version@" then
-		return featureBuild == tostring(select(4, GetBuildInfo()));
+		local liveBuild = tostring(select(4, GetBuildInfo()));
+		for token in string.gmatch(featureBuild, "[^,%s]+") do
+			if token == liveBuild then
+				return true;
+			end
+		end
+		return false;
 	end
 
 	local rangeStart, rangeEnd = versionPart:match("^([^%-]+)%-(.+)$");
