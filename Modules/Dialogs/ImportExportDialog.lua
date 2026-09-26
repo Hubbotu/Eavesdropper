@@ -423,6 +423,7 @@ end
 ---@param overwrite boolean
 function Eavesdropper_ImportExportDialogMixin:ApplyProfile(payload, profileName, overwrite)
 	local clean, dropped = ED.ProfileTransfer.SanitizeProfile(payload.data);
+	local foreignKeys = ED.ProfileTransfer.GetForeignDefaultKeys(payload.flavor, clean);
 
 	if not ED.Database:ImportProfile(profileName, clean, overwrite) then
 		self:SetStatus(L.IMPORTEXPORT_ERROR_WRITE_FAILED);
@@ -434,6 +435,14 @@ function Eavesdropper_ImportExportDialogMixin:ApplyProfile(payload, profileName,
 		or L.IMPORTEXPORT_SUCCESS_PROFILE:format(profileName));
 
 	self:Hide();
+
+	if #foreignKeys > 0 then
+		RunNextFrame(function()
+			ED.ConfirmDialog.Show(L.IMPORTEXPORT_CONFIRM_FLAVOR_DEFAULTS, function()
+				ED.Database:ResetSettings(foreignKeys);
+			end);
+		end);
+	end
 end
 
 ---Applies a decoded global payload, then offers a reload.

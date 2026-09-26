@@ -17,6 +17,12 @@ function Utils.IsRegionalNames()
 	return IS_REGIONAL_NAMES;
 end
 
+---Game flavor, based on the regional-names check since that is what flavor defaults follow.
+---@return "Retail"|"Forever"
+function Utils.GetFlavor()
+	return IS_REGIONAL_NAMES and "Forever" or "Retail";
+end
+
 -- ============================================================================
 -- COLOR UTILITIES
 -- ============================================================================

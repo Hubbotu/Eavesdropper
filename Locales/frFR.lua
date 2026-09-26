@@ -340,6 +340,7 @@ L = {
 	IMPORTEXPORT_CONFIRM_OVERWRITE = "Êtes-vous sûr de vouloir écraser le profil '%s' ?|n|nExporté |cnGREEN_FONT_COLOR:%s|r depuis la version |cnGREEN_FONT_COLOR:%s|r.|n|n|cnWARNING_FONT_COLOR:Note : tous les paramètres de ce profil seront remplacés.|r",
 	IMPORTEXPORT_CONFIRM_GLOBAL = "Êtes-vous sûr de vouloir importer ces options communes ?|n|nExporté |cnGREEN_FONT_COLOR:%s|r depuis la version |cnGREEN_FONT_COLOR:%s|r.|n|n|cnWARNING_FONT_COLOR:Note : cela affectera l'ensemble des personnages et des profils.|r",
 	IMPORTEXPORT_CONFIRM_RELOAD = "Les options communes ont été importées. Certaines ne prennent effet qu'après un rechargement.|n|nRecharger votre interface maintenant ?",
+	IMPORTEXPORT_CONFIRM_FLAVOR_DEFAULTS = "Ce profil a été exporté depuis une autre version du jeu, qui utilise des valeurs par défaut différentes pour certains paramètres.|n|nUtiliser les valeurs par défaut de cette version pour ces paramètres ?",
 
 	IMPORTEXPORT_SUCCESS_PROFILE = "Le profil '%s' a été importé et activé.",
 	IMPORTEXPORT_SUCCESS_PROFILE_SKIPPED = "Le profil '%s' a été importé et activé. |cnWARNING_FONT_COLOR:%d |4paramètre:paramètres; n'|4a:ont; pas pu être |4lu:lus; et |4a:ont; été |4ignoré:ignorés;.|r",
