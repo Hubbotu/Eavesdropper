@@ -307,9 +307,10 @@ function Eavesdropper_SettingsMixin:OnLoad()
 			line:SetPoint("RIGHT", relativeTo, "TOPRIGHT", -lineShrink, offset);
 			line:SetHeight(PixelUtil.ConvertPixelsToUIForRegion(1, line));
 		end
-		line:SetColorTexture(0.25, 0.25, 0.25);
+		line:SetColorTexture(0.1, 0.1, 0.1);
 		line:SetTexelSnappingBias(0);
 		line:SetSnapToPixelGrid(false);
+		line:SetBlendMode("ADD");
 	end
 
 	if C_AddOns.IsAddOnLoaded("ElvUI") then
