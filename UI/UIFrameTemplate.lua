@@ -97,10 +97,10 @@ function Eavesdropper_NineSliceFrameMixin:SetOffset(offset)
 end
 
 function Eavesdropper_NineSliceFrameMixin:OnLoad()
+	local isForever = false;
 	self:SetOffset(8);
-	self:SetTheme("Forever");
+	self:SetTheme(isForever and "Forever" or "Standard");
 	self:GetParent().BackgroundOverlay.InnerShadow:SetTexture("Interface/AddOns/Eavesdropper/Resources/SettingsPanelInnerShadow.png");
-	--BackgroundOverlay.BackgroundColor:SetColorTexture(0.12, 0.12, 0.12, 0.95);
 	self:GetParent().CloseButton:SetScript("OnClick", function()
 		self:GetParent():Hide();
 	end);
