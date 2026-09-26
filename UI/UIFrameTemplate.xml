@@ -1,0 +1,102 @@
+<!--
+	Copyright The Eavesdropper Authors
+	SPDX-License-Identifier: GPL-3.0-or-later
+-->
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+../Eavesdropper.xsd">
+	<Script file="UIFrameTemplate.lua"/>
+
+	<Frame name="Eavesdropper_NineSliceFrameTemplate" mixin="Eavesdropper_NineSliceFrameMixin" virtual="true" useParentLevel="true" setAllPoints="true">
+		<Layers>
+			<Layer level="OVERLAY">
+				<FontString parentKey="Text" inherits="GameFontNormal" wordwrap="false">
+					<Anchors>
+						<Anchor point="CENTER" relativeKey="$parent" relativePoint="TOP" x="0" y="-18"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+
+			<Layer level="BACKGROUND" textureSubLevel="-1">
+				<Texture parentKey="TopLeftCorner" parentArray="pieces">
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+					</Anchors>
+				</Texture>
+
+				<Texture parentKey="TopRightCorner" parentArray="pieces">
+					<Anchors>
+						<Anchor point="TOPRIGHT"/>
+					</Anchors>
+				</Texture>
+
+				<Texture parentKey="BottomLeftCorner" parentArray="pieces">
+					<Anchors>
+						<Anchor point="BOTTOMLEFT"/>
+					</Anchors>
+				</Texture>
+
+				<Texture parentKey="BottomRightCorner" parentArray="pieces">
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT"/>
+					</Anchors>
+				</Texture>
+
+				<Texture parentKey="TopEdge" parentArray="pieces">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.TopLeftCorner" relativePoint="TOPRIGHT"/>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.TopRightCorner" relativePoint="BOTTOMLEFT"/>
+					</Anchors>
+				</Texture>
+
+				<Texture parentKey="BottomEdge" parentArray="pieces">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.BottomLeftCorner" relativePoint="TOPRIGHT"/>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.BottomRightCorner" relativePoint="BOTTOMLEFT"/>
+					</Anchors>
+				</Texture>
+
+				<Texture parentKey="LeftEdge" parentArray="pieces">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.TopLeftCorner" relativePoint="BOTTOMLEFT"/>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.BottomLeftCorner" relativePoint="TOPRIGHT"/>
+					</Anchors>
+				</Texture>
+
+				<Texture parentKey="RightEdge" parentArray="pieces">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.TopRightCorner" relativePoint="BOTTOMLEFT"/>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.BottomRightCorner" relativePoint="TOPRIGHT"/>
+					</Anchors>
+				</Texture>
+
+				<Texture parentKey="Center" parentArray="pieces">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.TopLeftCorner" relativePoint="BOTTOMRIGHT"/>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.BottomRightCorner" relativePoint="TOPLEFT"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad method="OnLoad"/>
+		</Scripts>
+	</Frame>
+
+	<Frame name="Eavesdropper_UIFrameTemplate" virtual="true">
+		<Frames>
+			<Frame parentKey="BackgroundOverlay" useParentLevel="true" hidden="false">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="2" y="-21"/>
+					<Anchor point="BOTTOMRIGHT" x="-2" y="2"/>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND" textureSubLevel="0">
+						<Texture parentKey="InnerShadow" setAllPoints="true"/>
+					</Layer>
+				</Layers>
+			</Frame>
+			<Button parentKey="CloseButton" inherits="UIPanelCloseButtonDefaultAnchors"/>
+			<Frame parentKey="NineSlice" inherits="Eavesdropper_NineSliceFrameTemplate"/>
+		</Frames>
+	</Frame>
+</Ui>
