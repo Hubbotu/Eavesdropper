@@ -27,12 +27,9 @@ local ThemeLayout = {
 	},
 };
 
-ThemeLayout.ForeverBrighter = ThemeLayout.Forever;
-
 ---@alias FrameTheme
 ---| "Standard"
 ---| "Forever"
----| "ForeverBrighter"
 
 ---@param theme FrameTheme?
 function Eavesdropper_NineSliceFrameMixin:SetTheme(theme)
@@ -107,9 +104,11 @@ function Eavesdropper_NineSliceFrameMixin:OnLoad()
 	self:GetParent().CloseButton:SetScript("OnClick", function()
 		self:GetParent():Hide();
 	end);
-	self:ShowDebugButtons();
+
+	--self:ShowDebugButtons();
 end
 
+-- Show buttons to switch themes
 function Eavesdropper_NineSliceFrameMixin:ShowDebugButtons()
 	if not self.debugButtons then
 		self.debugButtons = {};
