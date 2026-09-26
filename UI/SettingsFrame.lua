@@ -1568,8 +1568,6 @@ function Eavesdropper_SettingsMixin:SetAlphaChannelMode(mode)
 
 	ED.ScreenshotHelper.SetupObjectColorByMode(self, mode);
 
-	self.Background.BackgroundColor:SetVertexColor(1, 1, 1);
-
 	if colorize then
 		self.NineSlice.Text:SetText(nil);
 	else
@@ -1594,8 +1592,6 @@ function Eavesdropper_SettingsMixin:SetAlphaChannelMode(mode)
 			self.fullscreenBackdrop:Hide();
 		end
 	end
-
-	self.Background.BackgroundColor:SetColorTexture(ED.ScreenshotHelper.GetBackgroundColorByMode(mode));
 end
 
 -- ============================================================
