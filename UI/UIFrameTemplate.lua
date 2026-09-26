@@ -107,5 +107,82 @@ function Eavesdropper_NineSliceFrameMixin:OnLoad()
 	self:GetParent().CloseButton:SetScript("OnClick", function()
 		self:GetParent():Hide();
 	end);
+	self:ShowDebugButtons();
 end
 
+function Eavesdropper_NineSliceFrameMixin:ShowDebugButtons()
+	if not self.debugButtons then
+		self.debugButtons = {};
+
+		local function Button_OnClick(f)
+			self:SetTheme(f.theme);
+			self:UpdateDebugButtons();
+		end
+
+		local function Button_OnEnter(f)
+			f:SetAlpha(1);
+		end
+
+		local function Button_OnLeave(f)
+			f:SetAlpha(0.8);
+		end
+
+		local function CreateTextButton(theme)
+			local f = CreateFrame("Button", nil, self);
+			f:SetSize(24, 24);
+			f.Text = f:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall");
+			f.Text:SetText(theme);
+			f.Text:SetPoint("CENTER", f, "CENTER", 0, 0);
+			f:SetWidth(f.Text:GetWrappedWidth() + 16);
+			f.theme = theme;
+			f:SetScript("OnClick", Button_OnClick);
+			f:SetScript("OnEnter", Button_OnEnter);
+			f:SetScript("OnLeave", Button_OnLeave);
+			Button_OnLeave(f);
+			table.insert(self.debugButtons, f);
+			return f;
+		end
+
+		local lastButton;
+		for theme in pairs(ThemeLayout) do
+			local f = CreateTextButton(theme);
+			if lastButton then
+				f:SetPoint("LEFT", lastButton, "RIGHT", 0, 0);
+			else
+				f:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 8);
+			end
+			lastButton = f;
+		end
+
+		local ShadowToggle = CreateTextButton("Shadow OFF");
+		ShadowToggle.isShadowToggle = true;
+		ShadowToggle:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", 0, 8);
+		ShadowToggle:SetScript("OnClick", function()
+			local InnerShadow = self:GetParent().BackgroundOverlay.InnerShadow;
+			InnerShadow:SetShown(not InnerShadow:IsShown());
+			self:UpdateDebugButtons();
+		end);
+	end
+
+	self:UpdateDebugButtons();
+end
+
+function Eavesdropper_NineSliceFrameMixin:UpdateDebugButtons()
+	if self.debugButtons then
+		for _, button in ipairs(self.debugButtons) do
+			if button.theme == self.theme then
+				button.Text:SetTextColor(1, 1, 1);
+			else
+				button.Text:SetTextColor(1, 0.82, 0);
+			end
+
+			if button.isShadowToggle then
+				if self:GetParent().BackgroundOverlay.InnerShadow:IsShown() then
+					button.Text:SetText("Shadow |cffffffffON|r");
+				else
+					button.Text:SetText("Shadow |cffffffffOFF|r");
+				end
+			end
+		end
+	end
+end
