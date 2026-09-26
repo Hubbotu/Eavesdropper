@@ -9,9 +9,10 @@
 	<Frame name="Eavesdropper_NineSliceFrameTemplate" mixin="Eavesdropper_NineSliceFrameMixin" virtual="true" useParentLevel="true" setAllPoints="true">
 		<Layers>
 			<Layer level="OVERLAY">
-				<FontString parentKey="Text" inherits="GameFontNormal" wordwrap="false">
+				<FontString parentKey="Text" inherits="GameFontNormal" maxLines="1">
 					<Anchors>
-						<Anchor point="CENTER" relativeKey="$parent" relativePoint="TOP" x="0" y="-18"/>
+						<Anchor point="LEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="60" y="-18"/>
+						<Anchor point="RIGHT" relativeKey="$parent" relativePoint="TOPRIGHT" x="-60" y="-18"/>
 					</Anchors>
 				</FontString>
 			</Layer>
