@@ -76,14 +76,6 @@ function Eavesdropper_ImportExportDialogMixin:OnLoad()
 	-- Matching the settings list width keeps the rows here identical to settings rows.
 	self:SetSize(Constants.SETTINGS.SETTINGS_LIST_WIDTH, Constants.SETTINGS.FRAME_HEIGHT);
 
-	NineSliceUtil.DisableSharpening(self.NineSlice);
-	self.Background.BackgroundColor:SetColorTexture(0.12, 0.12, 0.12, 0.95);
-	self.Background.InnerShadow:SetTexture("Interface/AddOns/Eavesdropper/Resources/SettingsPanelInnerShadow.png");
-
-	self.CloseButton:SetScript("OnClick", function()
-		self:Hide();
-	end);
-
 	self:BuildBody();
 
 	ED.ElvUI.RegisterSkinnableElement(self, Enums.ELVUI_SKIN_TYPE.FRAME);

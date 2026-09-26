@@ -280,20 +280,12 @@ function Eavesdropper_SettingsMixin:OnLoad()
 	self.Views = {};
 
 	self.NineSlice.Text:SetText(ED.Globals.addon_settings_icon .. " " .. ED.Globals.addon_title .. " " .. SETTINGS);
-	NineSliceUtil.DisableSharpening(self.NineSlice);
-
-	self.CloseButton:SetScript("OnClick", function()
-		self:Hide();
-	end);
 
 	local pos = ED.Database:GetGlobalSetting("SettingsWindowPosition");
 	if pos then
 		self:ClearAllPoints();
 		self:SetPoint(pos.point, UIParent, pos.relativePoint, pos.x, pos.y);
 	end
-
-	self.Background.BackgroundColor:SetColorTexture(0.12, 0.12, 0.12, 0.95);
-	self.Background.InnerShadow:SetTexture("Interface/AddOns/Eavesdropper/Resources/SettingsPanelInnerShadow.png");
 
 	-- Add a divider between CategoryList and SettingsList
 	local function CreateLine(parent, relativeTo, orientation, lineShrink, offset)
