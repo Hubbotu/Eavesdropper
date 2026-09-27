@@ -60,7 +60,6 @@ function Eavesdropper_NineSliceFrameMixin:SetTheme(theme)
 				texture = path.."-Center.png";
 				wrapModeHorizontal = "REPEAT";
 				wrapModeVertical = "REPEAT";
-				piece:SetSize(64, 64)
 				piece:SetTexCoord(0, 1, 0, 1);
 			else
 				texture = path..".png";
