@@ -96,7 +96,7 @@ function Eavesdropper_NineSliceFrameMixin:SetOffset(offset)
 end
 
 function Eavesdropper_NineSliceFrameMixin:OnLoad()
-	local isForever = false;
+	local isForever = ED.Utils.GetFlavor() == "Forever";
 	self:SetOffset(8);
 	self:SetTheme(isForever and "Forever" or "Standard");
 	self:GetParent().BackgroundOverlay.InnerShadow:SetTexture("Interface/AddOns/Eavesdropper/Resources/SettingsPanelInnerShadow.png");
