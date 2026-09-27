@@ -76,14 +76,6 @@ function Eavesdropper_ImportExportDialogMixin:OnLoad()
 	-- Matching the settings list width keeps the rows here identical to settings rows.
 	self:SetSize(Constants.SETTINGS.SETTINGS_LIST_WIDTH, Constants.SETTINGS.FRAME_HEIGHT);
 
-	NineSliceUtil.DisableSharpening(self.NineSlice);
-	self.Background.BackgroundColor:SetColorTexture(0.12, 0.12, 0.12, 0.95);
-	self.Background.InnerShadow:SetTexture("Interface/AddOns/Eavesdropper/Resources/SettingsPanelInnerShadow.png");
-
-	self.CloseButton:SetScript("OnClick", function()
-		self:Hide();
-	end);
-
 	self:BuildBody();
 
 	ED.ElvUI.RegisterSkinnableElement(self, Enums.ELVUI_SKIN_TYPE.FRAME);
@@ -141,16 +133,12 @@ function Eavesdropper_ImportExportDialogMixin:SetAlphaChannelMode(mode)
 
 	ED.ScreenshotHelper.SetupObjectColorByMode(self, mode);
 
-	self.Background.BackgroundColor:SetVertexColor(1, 1, 1);
-
 	if colorize then
 		self.NineSlice.Text:SetText(nil);
 	elseif self.alphaChannelTitle then
 		self.NineSlice.Text:SetText(self.alphaChannelTitle);
 		self.alphaChannelTitle = nil;
 	end
-
-	self.Background.BackgroundColor:SetColorTexture(ED.ScreenshotHelper.GetBackgroundColorByMode(mode));
 end
 
 ---Builds the instructions, paste box, name row, status line and action button

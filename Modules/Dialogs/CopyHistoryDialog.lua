@@ -209,14 +209,7 @@ Eavesdropper_CopyHistoryDialogMixin = {};
 function Eavesdropper_CopyHistoryDialogMixin:OnLoad()
 	tinsert(UISpecialFrames, self:GetName());
 
-	NineSliceUtil.DisableSharpening(self.NineSlice);
-	self.Background.BackgroundColor:SetColorTexture(0.12, 0.12, 0.12, 0.95);
-	self.Background.InnerShadow:SetTexture("Interface/AddOns/Eavesdropper/Resources/SettingsPanelInnerShadow.png");
 	self.NineSlice.Text:SetText(ED.Globals.addon_settings_icon .. " " .. ED.Globals.addon_title .. " " .. L.COPYHISTORY_TITLE);
-
-	self.CloseButton:SetScript("OnClick", function()
-		self:Hide();
-	end);
 
 	self:BuildOptionsRow();
 	self:BuildTextBox();

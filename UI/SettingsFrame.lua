@@ -280,20 +280,12 @@ function Eavesdropper_SettingsMixin:OnLoad()
 	self.Views = {};
 
 	self.NineSlice.Text:SetText(ED.Globals.addon_settings_icon .. " " .. ED.Globals.addon_title .. " " .. SETTINGS);
-	NineSliceUtil.DisableSharpening(self.NineSlice);
-
-	self.CloseButton:SetScript("OnClick", function()
-		self:Hide();
-	end);
 
 	local pos = ED.Database:GetGlobalSetting("SettingsWindowPosition");
 	if pos then
 		self:ClearAllPoints();
 		self:SetPoint(pos.point, UIParent, pos.relativePoint, pos.x, pos.y);
 	end
-
-	self.Background.BackgroundColor:SetColorTexture(0.12, 0.12, 0.12, 0.95);
-	self.Background.InnerShadow:SetTexture("Interface/AddOns/Eavesdropper/Resources/SettingsPanelInnerShadow.png");
 
 	-- Add a divider between CategoryList and SettingsList
 	local function CreateLine(parent, relativeTo, orientation, lineShrink, offset)
@@ -307,9 +299,10 @@ function Eavesdropper_SettingsMixin:OnLoad()
 			line:SetPoint("RIGHT", relativeTo, "TOPRIGHT", -lineShrink, offset);
 			line:SetHeight(PixelUtil.ConvertPixelsToUIForRegion(1, line));
 		end
-		line:SetColorTexture(0.25, 0.25, 0.25);
+		line:SetColorTexture(0.1, 0.1, 0.1);
 		line:SetTexelSnappingBias(0);
 		line:SetSnapToPixelGrid(false);
+		line:SetBlendMode("ADD");
 	end
 
 	if C_AddOns.IsAddOnLoaded("ElvUI") then
@@ -1575,8 +1568,6 @@ function Eavesdropper_SettingsMixin:SetAlphaChannelMode(mode)
 
 	ED.ScreenshotHelper.SetupObjectColorByMode(self, mode);
 
-	self.Background.BackgroundColor:SetVertexColor(1, 1, 1);
-
 	if colorize then
 		self.NineSlice.Text:SetText(nil);
 	else
@@ -1601,8 +1592,6 @@ function Eavesdropper_SettingsMixin:SetAlphaChannelMode(mode)
 			self.fullscreenBackdrop:Hide();
 		end
 	end
-
-	self.Background.BackgroundColor:SetColorTexture(ED.ScreenshotHelper.GetBackgroundColorByMode(mode));
 end
 
 -- ============================================================
