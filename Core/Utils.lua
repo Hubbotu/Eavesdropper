@@ -67,6 +67,16 @@ function Utils.EscapePattern(text)
 	return text:gsub("([^%w])", "%%%1");
 end
 
+---Utils.StringContains Returns true if text contains substring as a literal (non-pattern) match.
+---Uses the native string.contains where it exists (Forever, 12.1.5+).
+---@param text string
+---@param substring string
+---@return boolean
+function Utils.StringContains(text, substring)
+	if string.contains then return string.contains(text, substring); end
+	return StringContains(text, substring);
+end
+
 ---NormalizeColors Ensures all color codes are properly closed
 ---@param message string
 ---@return string

@@ -92,6 +92,7 @@ stds.wow = {
 		string = {
 			fields = {
 				"concat",
+				"contains", -- Native on Forever and 12.1.5+.
 				"join",
 				"split",
 				"trim",
