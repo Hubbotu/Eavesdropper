@@ -299,6 +299,8 @@ local function ResolveUnitSenderGuid(unit, ownName)
 	if not UnitExists(unit) or not UnitIsPlayer(unit) then return; end
 
 	local guid = UnitGUID(unit);
+	if guid and not canaccessvalue(guid) then return; end
+
 	local sender = Utils.GetUnitName(unit);
 	if not sender then return; end
 	if guid ~= ED.Globals.player_guid and sender == ownName then return; end
