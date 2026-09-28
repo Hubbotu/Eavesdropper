@@ -30,7 +30,7 @@ jobs:
         continue-on-error: true
         with:
           args: --no-color -q
-          files: $(git ls-files '*.lua' ':!:Locales/????.lua')
+          files: $(git ls-files '*.lua' ':!:Locales/frFR.lua' ':!:Locales/ruRU.lua')
           annotate: warning
 
       - name: Run editorconfig-checker
@@ -40,7 +40,7 @@ jobs:
         continue-on-error: true
         with:
           args: -no-color
-          files: $(git ls-files '*.lua' '*.sh' '*.xml' ':!:Locales/*.lua' ':!:UI/ChangelogMarkdown.lua')
+          files: $(git ls-files '*.lua' '*.sh' '*.xml' ':!:Locales/frFR.lua' ':!:Locales/ruRU.lua' ':!:UI/ChangelogMarkdown.lua')
 
       - name: Run XML schema validation
         id: validate_xml
