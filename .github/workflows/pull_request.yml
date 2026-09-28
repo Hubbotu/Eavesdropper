@@ -2,6 +2,11 @@
 name: Pull Request
 on: pull_request
 
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}
   cancel-in-progress: true
@@ -50,12 +55,27 @@ jobs:
           echo "XML validation: ${{ steps.validate_xml.outcome }}"
           exit 1
 
+      # Fetched at run time (not from the event payload) so that re-running
+      # the workflow after adding the label picks it up.
+      - name: Check for package label
+        id: labels
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.number }}
+        run: |
+          if gh api "repos/$GITHUB_REPOSITORY/issues/$PR/labels" --paginate --jq '.[].name' | grep -qx package; then
+            echo "package=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Create Package
+        if: steps.labels.outputs.package == 'true'
         uses: BigWigsMods/packager@v2
         with:
           args: -dz
 
-      - uses: actions/upload-artifact@v7
+      - name: Upload Artifact
+        if: steps.labels.outputs.package == 'true'
+        uses: actions/upload-artifact@v7
         with:
           name: Eavesdropper-PR-${{ github.event.number }}
           path: .release/
