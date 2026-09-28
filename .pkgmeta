@@ -13,6 +13,7 @@ ignore:
   - Previews/*
   - Types
   - '*.xsd'
+  - justfile
   - README.md
   - LICENSE
 
