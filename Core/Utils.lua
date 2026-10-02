@@ -17,10 +17,13 @@ function Utils.IsRegionalNames()
 	return IS_REGIONAL_NAMES;
 end
 
----Game flavor, based on the regional-names check since that is what flavor defaults follow.
+---We prefer WOW_PROJECT_MAINLINE over WOW_PROJECT_CAMELOT, which might not be on Standard yet.
+local IS_MAINLINE = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE;
+
+---Game flavor, from the client's project ID rather than the regional-names capability.
 ---@return "Retail"|"Forever"
 function Utils.GetFlavor()
-	return IS_REGIONAL_NAMES and "Forever" or "Retail";
+	return IS_MAINLINE and "Retail" or "Forever";
 end
 
 -- ============================================================================
