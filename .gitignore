@@ -10,6 +10,7 @@
 
 # WoW build output (if using tooling like WowPackager, wow-addon-tools, etc.)
 *.zip
+.release/
 release/
 dist/
 pkg/

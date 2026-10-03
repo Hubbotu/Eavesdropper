@@ -11,6 +11,9 @@ ignore:
   - Libs/*/README.*
   - Libs/*/tests
   - Previews/*
+  - Types
+  - '*.xsd'
+  - justfile
   - README.md
   - LICENSE
 

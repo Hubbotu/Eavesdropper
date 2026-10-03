@@ -2,6 +2,11 @@
 name: Pull Request
 on: pull_request
 
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}
   cancel-in-progress: true
@@ -10,10 +15,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: extractions/setup-just@v4
       - uses: actions/setup-python@v7
         with:
-          python-version: '3.13'
+          python-version: '3.10'
       - uses: actions/checkout@v7
+
+      - name: Set up Lua
+        if: hashFiles('Tests/*Spec.lua') != ''
+        uses: leafo/gh-actions-lua@v13
+        with:
+          luaVersion: 5.1
+
+      - name: Set up LuaRocks
+        if: hashFiles('Tests/*Spec.lua') != ''
+        uses: leafo/gh-actions-luarocks@v6
+
+      - name: Install Lua test dependencies
+        if: hashFiles('Tests/*Spec.lua') != ''
+        run: luarocks install busted
 
       - name: Install validation dependencies
         run: python -m pip install -r .github/scripts/requirements.txt
@@ -25,7 +45,7 @@ jobs:
         continue-on-error: true
         with:
           args: --no-color -q
-          files: $(git ls-files '*.lua' ':!:Locales/????.lua')
+          files: $(git ls-files '*.lua' ':!:Locales/frFR.lua' ':!:Locales/ruRU.lua')
           annotate: warning
 
       - name: Run editorconfig-checker
@@ -35,7 +55,7 @@ jobs:
         continue-on-error: true
         with:
           args: -no-color
-          files: $(git ls-files '*.lua' '*.sh' '*.xml' ':!:Locales/*.lua' ':!:UI/ChangelogMarkdown.lua')
+          files: $(git ls-files '*.lua' '*.sh' '*.xml' ':!:Locales/frFR.lua' ':!:Locales/ruRU.lua' ':!:UI/ChangelogMarkdown.lua')
 
       - name: Run XML schema validation
         id: validate_xml
@@ -50,12 +70,31 @@ jobs:
           echo "XML validation: ${{ steps.validate_xml.outcome }}"
           exit 1
 
+      - name: Run Lua tests
+        if: hashFiles('Tests/*Spec.lua') != ''
+        run: just test
+
+      # Fetched at run time (not from the event payload) so that re-running
+      # the workflow after adding the label picks it up.
+      - name: Check for package label
+        id: labels
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.number }}
+        run: |
+          if gh api "repos/$GITHUB_REPOSITORY/issues/$PR/labels" --paginate --jq '.[].name' | grep -qx package; then
+            echo "package=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Create Package
+        if: steps.labels.outputs.package == 'true'
         uses: BigWigsMods/packager@v2
         with:
           args: -dz
 
-      - uses: actions/upload-artifact@v7
+      - name: Upload Artifact
+        if: steps.labels.outputs.package == 'true'
+        uses: actions/upload-artifact@v7
         with:
           name: Eavesdropper-PR-${{ github.event.number }}
           path: .release/
