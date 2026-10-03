@@ -168,15 +168,8 @@ end
 
 ---Updates the name in the title bar
 function Eavesdropper_Dedicated_FrameMixin:UpdateTitleBar()
-	local newName = self.eavesdropped_player;
-
 	local newPlayer, newGuid = ED.PlayerCache:InsertAndRetrieve(self.eavesdropped_player);
-	if newPlayer and newGuid then
-		local _, firstName = ED.MSP.TryGetMSPData(newPlayer, newGuid);
-		newName = ED.Utils.StripColorCodes(ED.Utils.StripRealmSuffix(firstName or newPlayer));
-	else
-		newName = ED.Utils.StripRealmSuffix(newName);
-	end
+	local newName = ED.MSP.GetTitleBarName(newPlayer or self.eavesdropped_player, newGuid, ED.Database:GetSetting("TitleBarFullName"));
 
 	if newName == self.titlebar_name then return; end
 

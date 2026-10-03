@@ -600,6 +600,20 @@ function Eavesdropper_SettingsMixin:OnLoad()
 		},
 		{
 			type = "checkbox",
+			label = L.TITLE_BAR_FULL_NAME,
+			tooltip = L.TITLE_BAR_FULL_NAME_HELP,
+			buildAdded = "0.7.0|120100,16001",
+			get = function() return ED.Database:GetSetting("TitleBarFullName"); end,
+			set = function(val)
+				ED.Database:SetSetting("TitleBarFullName", val);
+				ED.Frame:UpdateTitleBar();
+				ED.DedicatedFrame:ForEachFrame(function(frame)
+					frame:UpdateTitleBar();
+				end);
+			end,
+		},
+		{
+			type = "checkbox",
 			global = true,
 			label = L.NEW_WINDOWS_NEW_INDICATOR,
 			tooltip = L.NEW_WINDOWS_NEW_INDICATOR_HELP,
@@ -1263,7 +1277,7 @@ function Eavesdropper_SettingsMixin:OnLoad()
 		{
 			type = "editbox_multiline",
 			label = L.KEYWORDS_LIST,
-			tooltip = L.KEYWORDS_LIST_HELP,
+			tooltip = L.KEYWORDS_LIST_HELP:format(ED.Utils.IsRegionalNames() and L.KEYWORDS_LIST_HELP_OOC_PARTS or ""),
 			height = 100,
 			get = function() return ED.Database:GetSetting("HighlightKeywords"); end,
 			set = function(val)
@@ -1427,7 +1441,7 @@ function Eavesdropper_SettingsMixin:OnLoad()
 
 	local version = ED.Globals.addon_version;
 	local versionTextColor = ED.Utils.ValidateLatestBuild() and "COMMON_GRAY_COLOR" or "WARNING_FONT_COLOR";
-	if StringContains(version, "project-version") then
+	if ED.Utils.StringContains(version, "project-version") then
 		version = "Dev"; -- Show "Dev" for internal build
 	end
 	local aboutPanel, aboutCategoryListButton = self:CreateCategory(string.format("%s  |cn%s:%s|r", L.ABOUT_TITLE, versionTextColor, version), false, nil, true);

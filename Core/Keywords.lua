@@ -27,7 +27,7 @@ local function IsWordBoundaryMatch(str, startPos, endPos)
 end
 
 ---Rebuilds the keyword lookup table and sorted list from the HighlightKeywords setting.
----Applies token substitutions (<firstname>, <lastname>, <oocname>, <class>, <race>).
+---Applies token substitutions (<firstname>, <lastname>, <oocname>, <oocfirstname>, <ooclastname>, <class>, <race>).
 function Keywords:ParseList()
 	if not ED or not ED.Database then return; end
 
@@ -52,6 +52,15 @@ function Keywords:ParseList()
 	className = className or "";
 	raceName  = raceName or "";
 
+	-- Only Forever names have a family part, elsewhere <ooclastname> is empty and dropped.
+	local oocName = ED.Globals.player_character_name or "";
+	local oocFirstName, oocLastName = oocName, "";
+	if ED.Utils.IsRegionalNames() then
+		oocFirstName, oocLastName = NameUtil.SplitPlayerNameIntoParts(oocName);
+		oocFirstName = oocFirstName or oocName;
+		oocLastName  = oocLastName or "";
+	end
+
 	for word in highlightKeywords:gmatch("([^,]+)") do
 		word = string.trim(word);
 		if word ~= "" then
@@ -59,7 +68,9 @@ function Keywords:ParseList()
 			word = word
 				:gsub("<firstname>", function() return firstName; end)
 				:gsub("<lastname>",  function() return lastName; end)
-				:gsub("<oocname>",   function() return ED.Globals.player_character_name; end)
+				:gsub("<oocname>",      function() return oocName; end)
+				:gsub("<oocfirstname>", function() return oocFirstName; end)
+				:gsub("<ooclastname>",  function() return oocLastName; end)
 				:gsub("<class>",     function() return className; end)
 				:gsub("<race>",      function() return raceName; end);
 

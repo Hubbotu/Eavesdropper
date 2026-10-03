@@ -288,6 +288,7 @@ local function PackPayload(payloadType, name, data)
 		payloadType,
 		name or "",
 		data,
+		ED.Utils.GetFlavor(), -- Last, since older versions only unpack the first five.
 	};
 end
 
@@ -321,6 +322,7 @@ function ProfileTransfer.ExportProfile()
 		{ key = "Name",          value = name },
 		{ key = "Exported",      value = date("%Y-%m-%d %H:%M:%S") },
 		{ key = "AddOn-Version", value = ED.Globals.addon_version },
+		{ key = "Flavor",        value = ED.Utils.GetFlavor() },
 	});
 end
 
@@ -347,6 +349,7 @@ function ProfileTransfer.ExportGlobals()
 	return EncodePayload(LABEL_GLOBAL, PackPayload("global", nil, data), {
 		{ key = "Exported",      value = date("%Y-%m-%d %H:%M:%S") },
 		{ key = "AddOn-Version", value = ED.Globals.addon_version },
+		{ key = "Flavor",        value = ED.Utils.GetFlavor() },
 	});
 end
 
@@ -397,7 +400,7 @@ function ProfileTransfer.DecodeString(text)
 		return nil, L.IMPORTEXPORT_ERROR_PACKED_DATA_INVALID;
 	end
 
-	local schemaVersion, addonVersion, decodedType, name, settings = unpack(packed, 1, 5);
+	local schemaVersion, addonVersion, decodedType, name, settings, flavor = unpack(packed, 1, 6);
 
 	-- A non-numeric version means the payload is (probably) malformed.
 	if type(schemaVersion) ~= "number" then
@@ -413,7 +416,8 @@ function ProfileTransfer.DecodeString(text)
 		return nil, L.IMPORTEXPORT_ERROR_PACKED_DATA_INVALID;
 	end
 
-	-- The export date lives in the PEM header, never in the payload.
+	-- The export date lives in the PEM header, never in the payload. The Flavor header is
+	-- only for people, the payload's copy is used.
 	local exported = type(headers) == "table" and headers.Exported or nil;
 
 	return {
@@ -422,8 +426,28 @@ function ProfileTransfer.DecodeString(text)
 		payloadType   = decodedType,
 		name          = (type(name) == "string" and name ~= "") and name or nil,
 		exported      = type(exported) == "string" and exported or nil,
+		flavor        = type(flavor) == "string" and flavor or "Retail", -- Untagged strings predate Forever support.
 		data          = settings,
 	}, nil;
+end
+
+---GetForeignDefaultKeys Lists flavor-dependent keys an import from another flavor left at its default.
+---@param flavor string Source flavor, from DecodeString.
+---@param data table Sanitized profile settings.
+---@return EavesdropperSettingKey[] keys
+function ProfileTransfer.GetForeignDefaultKeys(flavor, data)
+	local keys = {};
+	if flavor == ED.Utils.GetFlavor() then return keys; end
+
+	for key, defaults in pairs(ED.Database.flavorDefaults) do
+		local sourceDefault = defaults[flavor];
+
+		if sourceDefault ~= nil and data[key] == sourceDefault then
+			keys[#keys + 1] = key;
+		end
+	end
+
+	return keys;
 end
 
 ED.ProfileTransfer = ProfileTransfer;

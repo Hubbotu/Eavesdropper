@@ -169,6 +169,8 @@ L = {
 
 	TITLE_BAR_TARGET_NAME = "Имя цели в заголовке",
 	TITLE_BAR_TARGET_NAME_HELP = "Заменяет название «Eavesdropper» в заголовке на имя вашей текущей цели. Позволяет быстро понять, чью историю вы сейчас просматриваете.",
+	TITLE_BAR_FULL_NAME = "Title Bar Full Name", -- NEW
+	TITLE_BAR_FULL_NAME_HELP = "Shows the full name in the title bar instead of just the first name. Also applies to Dedicated windows, which always show a name.|n|n- With RP data, this is the full RP name, otherwise the character name.", -- NEW
 
 	WELCOME_MSG = "Сообщение при запуске",
 	WELCOME_MSG_HELP = "Показывать ли приветствие в чате при загрузке аддона.|n|n* Это общая настройка для всех профилей.",
@@ -265,7 +267,8 @@ L = {
 	KEYWORDS_ENABLE_HELP = "Включает систему отслеживания ключевых слов в Eavesdropper.|n|n|cnWARNING_FONT_COLOR:Примечание: списки слов сохраняются для профиля целиком, а не для каждого персонажа отдельно.|r",
 
 	KEYWORDS_LIST = "Список слов",
-	KEYWORDS_LIST_HELP = "Введите слова или фразы для выделения в истории чата.|n|nСпециальные теги:|n|cnGREEN_FONT_COLOR:<firstname>|r - ваше РП-имя|n|cnGREEN_FONT_COLOR:<lastname>|r - ваша РП-фамилия|n|cnGREEN_FONT_COLOR:<oocname>|r - ваш игровой никнейм|n|cnGREEN_FONT_COLOR:<class>|r - ваш РП-класс (или игровой)|n|cnGREEN_FONT_COLOR:<race>|r - ваша РП-раса (или игровая)|n|nПравила:|n- Разделяйте записи запятыми.|n- Регистр не учитывается (н-р, «Герой» совпадет с «герой»).|n- Пробелы внутри фраз учитываются.|n|n|cnWARNING_FONT_COLOR:Примечание: пробелы до и после запятой игнорируются.|r",
+	KEYWORDS_LIST_HELP = "Введите слова или фразы для выделения в истории чата.|n|nСпециальные теги:|n|cnGREEN_FONT_COLOR:<firstname>|r - ваше РП-имя|n|cnGREEN_FONT_COLOR:<lastname>|r - ваша РП-фамилия|n|cnGREEN_FONT_COLOR:<oocname>|r - ваш игровой никнейм|n%s|cnGREEN_FONT_COLOR:<class>|r - ваш РП-класс (или игровой)|n|cnGREEN_FONT_COLOR:<race>|r - ваша РП-раса (или игровая)|n|nПравила:|n- Разделяйте записи запятыми.|n- Регистр не учитывается (н-р, «Герой» совпадет с «герой»).|n- Пробелы внутри фраз учитываются.|n|n|cnWARNING_FONT_COLOR:Примечание: пробелы до и после запятой игнорируются.|r",
+	KEYWORDS_LIST_HELP_OOC_PARTS = "|cnGREEN_FONT_COLOR:<oocfirstname>|r - Your in-game first name|n|cnGREEN_FONT_COLOR:<ooclastname>|r - Your in-game last name|n", -- NEW
 
 	KEYWORDS_HIGHLIGHT_COLOR = "Цвет выделения",
 	KEYWORDS_HIGHLIGHT_COLOR_HELP = "Выберите цвет, которым будут окрашены ключевые слова в тексте.",
@@ -337,6 +340,7 @@ L = {
 	IMPORTEXPORT_CONFIRM_OVERWRITE = "Are you sure you want to overwrite the profile '%s'?|n|nExported on |cnGREEN_FONT_COLOR:%s|r from version |cnGREEN_FONT_COLOR:%s|r.|n|n|cnWARNING_FONT_COLOR:Note: Every setting in that profile will be replaced.|r", -- NEW
 	IMPORTEXPORT_CONFIRM_GLOBAL = "Are you sure you want to import these global settings?|n|nExported on |cnGREEN_FONT_COLOR:%s|r from version |cnGREEN_FONT_COLOR:%s|r.|n|n|cnWARNING_FONT_COLOR:Note: This affects every character and profile.|r", -- NEW
 	IMPORTEXPORT_CONFIRM_RELOAD = "Global settings have been imported. Some of them only take effect after a reload.|n|nReload your interface now?", -- NEW
+	IMPORTEXPORT_CONFIRM_FLAVOR_DEFAULTS = "This profile was exported from another version of the game, which uses different defaults for some settings.|n|nSwitch those settings to this version's defaults?", -- NEW
 
 	IMPORTEXPORT_SUCCESS_PROFILE = "Imported the profile '%s' and switched to it.", -- NEW
 	IMPORTEXPORT_SUCCESS_PROFILE_SKIPPED = "Imported the profile '%s' and switched to it. |cnWARNING_FONT_COLOR:%d |4setting:settings; could not be read and |4was:were; skipped.|r", -- NEW

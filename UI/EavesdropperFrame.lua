@@ -134,8 +134,7 @@ end
 function Eavesdropper_FrameMixin:UpdateTitleBar()
 	local newName = "Eavesdropper";
 	if ED.Database:GetSetting("UpdateTitleBarWithName") and self.eavesdropped_player then
-		local _, firstName = ED.MSP.TryGetMSPData(self.eavesdropped_player, self.eavesdropped_player_guid);
-		newName = ED.Utils.StripColorCodes(ED.Utils.StripRealmSuffix(firstName or self.eavesdropped_player));
+		newName = ED.MSP.GetTitleBarName(self.eavesdropped_player, self.eavesdropped_player_guid, ED.Database:GetSetting("TitleBarFullName"));
 	end
 
 	if newName == self.titlebar_name then return; end

@@ -92,6 +92,7 @@ stds.wow = {
 		string = {
 			fields = {
 				"concat",
+				"contains", -- Native on Forever and 12.1.5+.
 				"join",
 				"split",
 				"trim",
@@ -157,6 +158,12 @@ stds.wow = {
 
 		Constants = {
 			fields = {
+				CharacterNameSeparatorConsts = {
+					fields = {
+						"CHARACTERNAME_REALMNAME_SEPARATOR",
+						"CHARACTERNAME_SURNAME_SEPARATOR",
+					},
+				},
 				PetConsts = {
 					fields = {
 						"NUM_PET_SLOTS",
@@ -505,6 +512,13 @@ stds.wow = {
 			},
 		},
 
+		NameUtil = {
+			fields = {
+				"GetFullNameWithoutRealm",
+				"SplitPlayerNameIntoParts",
+			},
+		},
+
 		NineSliceUtil = {
 			fields = {
 				"DisableSharpening",
@@ -685,6 +699,7 @@ stds.wow = {
 		"PlaySoundFile",
 		"RaidNotice_AddMessage",
 		"RaidWarningFrame",
+		"RegionalUniqueNamesEnabled",
 		"ReloadUI",
 		"RemoveChatWindowChannel",
 		"ResetCursor",
@@ -767,6 +782,7 @@ stds.wow = {
 		"UnitIsUnit",
 		"UnitLevel",
 		"UnitName",
+		"UnitNameFromGUID",
 		"UnitNameUnmodified",
 		"UnitOwnerGUID",
 		"UnitPlayerControlled",

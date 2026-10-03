@@ -169,6 +169,8 @@ L = {
 
 	TITLE_BAR_TARGET_NAME = "Nom de la cible dans la barre de titre",
 	TITLE_BAR_TARGET_NAME_HELP = "Remplace l'intitulé 'Eavesdropper' dans la barre de titre par le nom de votre cible actuelle. Cela fournit une confirmation visuelle rapide du personnage dont vous consultez l'historique.",
+	TITLE_BAR_FULL_NAME = "Nom complet dans la barre de titre",
+	TITLE_BAR_FULL_NAME_HELP = "Affiche le nom complet dans la barre de titre au lieu du prénom seul. S'applique aussi aux fenêtres individuelles, qui affichent toujours un nom.|n|n- Avec des données RP, il s'agit du nom RP complet, sinon du nom du personnage.",
 
 	WELCOME_MSG = "Message de démarrage",
 	WELCOME_MSG_HELP = "Active l'affichage du message de démarrage.",
@@ -265,7 +267,8 @@ L = {
 	KEYWORDS_ENABLE_HELP = "Active la mise en surbrillance des mots-clés pour Eavesdropper.|n|n|cnWARNING_FONT_COLOR:Note : les listes de mots-clés sont sauvegardées par profil et non par personnage.|r",
 
 	KEYWORDS_LIST = "Liste des mots-clés",
-	KEYWORDS_LIST_HELP = "Saisissez des mots ou phrases à mettre en surbrillance dans l'historique de discussion.|n|nBalises spéciales :|n|cnGREEN_FONT_COLOR:<firstname>|r - Votre prénom RP|n|cnGREEN_FONT_COLOR:<lastname>|r - Votre nom de famille RP|n|cnGREEN_FONT_COLOR:<oocname>|r - Votre nom HRP|n|cnGREEN_FONT_COLOR:<class>|r - Votre classe RP (utilise par défaut la classe en jeu)|n|cnGREEN_FONT_COLOR:<race>|r - Votre race RP (utilise par défaut la race en jeu)|n|nMise en forme :|n- Séparez les entrées par des virgules.|n- Elles ne tiennent pas compte de la casse (ex. : 'Héros' correspond à 'héros').|n- Les espaces au sein d'une phrase sont conservés.|n|n|cnWARNING_FONT_COLOR:Note : les espaces immédiatement situés avant ou après une virgule sont ignorés.|r",
+	KEYWORDS_LIST_HELP = "Saisissez des mots ou phrases à mettre en surbrillance dans l'historique de discussion.|n|nBalises spéciales :|n|cnGREEN_FONT_COLOR:<firstname>|r - Votre prénom RP|n|cnGREEN_FONT_COLOR:<lastname>|r - Votre nom de famille RP|n|cnGREEN_FONT_COLOR:<oocname>|r - Votre nom HRP|n%s|cnGREEN_FONT_COLOR:<class>|r - Votre classe RP (utilise par défaut la classe en jeu)|n|cnGREEN_FONT_COLOR:<race>|r - Votre race RP (utilise par défaut la race en jeu)|n|nMise en forme :|n- Séparez les entrées par des virgules.|n- Elles ne tiennent pas compte de la casse (ex. : 'Héros' correspond à 'héros').|n- Les espaces au sein d'une phrase sont conservés.|n|n|cnWARNING_FONT_COLOR:Note : les espaces immédiatement situés avant ou après une virgule sont ignorés.|r",
+	KEYWORDS_LIST_HELP_OOC_PARTS = "|cnGREEN_FONT_COLOR:<oocfirstname>|r - Votre prénom HRP|n|cnGREEN_FONT_COLOR:<ooclastname>|r - Votre nom de famille HRP|n",
 
 	KEYWORDS_HIGHLIGHT_COLOR = "Couleur de surbrillance",
 	KEYWORDS_HIGHLIGHT_COLOR_HELP = "Définit la couleur utilisée pour les mots-clés mis en surbrillance dans la discussion.",
@@ -337,6 +340,7 @@ L = {
 	IMPORTEXPORT_CONFIRM_OVERWRITE = "Êtes-vous sûr de vouloir écraser le profil '%s' ?|n|nExporté |cnGREEN_FONT_COLOR:%s|r depuis la version |cnGREEN_FONT_COLOR:%s|r.|n|n|cnWARNING_FONT_COLOR:Note : tous les paramètres de ce profil seront remplacés.|r",
 	IMPORTEXPORT_CONFIRM_GLOBAL = "Êtes-vous sûr de vouloir importer ces options communes ?|n|nExporté |cnGREEN_FONT_COLOR:%s|r depuis la version |cnGREEN_FONT_COLOR:%s|r.|n|n|cnWARNING_FONT_COLOR:Note : cela affectera l'ensemble des personnages et des profils.|r",
 	IMPORTEXPORT_CONFIRM_RELOAD = "Les options communes ont été importées. Certaines ne prennent effet qu'après un rechargement.|n|nRecharger votre interface maintenant ?",
+	IMPORTEXPORT_CONFIRM_FLAVOR_DEFAULTS = "Ce profil a été exporté depuis une autre version du jeu, qui utilise des valeurs par défaut différentes pour certains paramètres.|n|nUtiliser les valeurs par défaut de cette version pour ces paramètres ?",
 
 	IMPORTEXPORT_SUCCESS_PROFILE = "Le profil '%s' a été importé et activé.",
 	IMPORTEXPORT_SUCCESS_PROFILE_SKIPPED = "Le profil '%s' a été importé et activé. |cnWARNING_FONT_COLOR:%d |4paramètre:paramètres; n'|4a:ont; pas pu être |4lu:lus; et |4a:ont; été |4ignoré:ignorés;.|r",

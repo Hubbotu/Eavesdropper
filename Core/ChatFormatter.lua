@@ -172,9 +172,15 @@ local function MsgFormatEmoteGroup(entry, name, forGroup, stripMessageHyperlink)
 end
 
 ---Strips the leading sender token (everything up to and including the first space).
+---Regional senders contain a space, so the whole name is stripped instead.
 ---@param text string
+---@param sender string?
 ---@return string
-local function StripLeadingToken(text)
+local function StripLeadingToken(text, sender)
+	if sender and ED.Utils.IsRegionalNames() and text:sub(1, #sender + 1) == sender .. " " then
+		return text:sub(#sender + 2);
+	end
+
 	local firstSpace = text:find(" ", 1, true) or 0;
 	return text:sub(firstSpace + 1);
 end
@@ -199,7 +205,7 @@ local function MsgFormatTextEmote(entry, name)
 	local prependName = (entry.e == "ROLL" or ED.Utils.GetUnitName() ~= entry.s);
 
 	if prependName then
-		messageText = StripLeadingToken(messageText);
+		messageText = StripLeadingToken(messageText, entry.s);
 	end
 
 	messageText = ColorByEvent(messageText, entry.e);
@@ -216,7 +222,7 @@ end
 ---@param name string
 ---@return string
 local function MsgFormatTextEmoteNoName(entry, name) -- luacheck: no unused (name)
-	return ColorByEvent(StripLeadingToken(entry.m or ""), entry.e);
+	return ColorByEvent(StripLeadingToken(entry.m or "", entry.s), entry.e);
 end
 
 ---Group-aware text-emote formatter: always prepends the sender name, even when
@@ -225,7 +231,7 @@ end
 ---@param name string
 ---@return string
 local function MsgFormatTextEmoteGroup(entry, name)
-	return name .. " " .. ColorByEvent(StripLeadingToken(entry.m or ""), entry.e);
+	return name .. " " .. ColorByEvent(StripLeadingToken(entry.m or "", entry.s), entry.e);
 end
 
 ---@type table<string, fun(entry:EavesdropperChatEntry, name:string, forGroup:boolean?, stripMessageHyperlink:boolean?):string>
@@ -348,7 +354,7 @@ end
 ---@param replacement string
 ---@return string
 local function SubstituteNameOccurrence(msgText, rawName, replacement)
-	local bareName = rawName:match("^([^%-]+)");
+	local bareName = ED.Utils.StripRealmSuffix(rawName);
 
 	local newText = ReplaceNameHyperlink(msgText, rawName, replacement)
 		or (bareName and ReplaceNameHyperlink(msgText, bareName, replacement));
@@ -386,7 +392,7 @@ local function FormatTextEmoteTargetWithRPName(entry, msgText, forceDisplayMode)
 	end
 
 	if not sender then return msgText; end
-	local bareName = sender:match("^([^%-]+)");
+	local bareName = ED.Utils.StripRealmSuffix(sender);
 	if entry.s == bareName or entry.s == sender then return msgText; end
 
 	local nameDisplayMode = forceDisplayMode or ED.Database:GetSetting("NameDisplayMode");

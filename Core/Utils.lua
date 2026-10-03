@@ -4,6 +4,28 @@
 ---@class EavesdropperUtils
 local Utils = {};
 
+---True where character names are region-unique ("Given Family", no realm), e.g. Forever.
+local IS_REGIONAL_NAMES = (RegionalUniqueNamesEnabled and RegionalUniqueNamesEnabled()) and true or false;
+local SURNAME_SEPARATOR = Constants.CharacterNameSeparatorConsts and Constants.CharacterNameSeparatorConsts.CHARACTERNAME_SURNAME_SEPARATOR or " ";
+local REALM_SEPARATOR = Constants.CharacterNameSeparatorConsts and Constants.CharacterNameSeparatorConsts.CHARACTERNAME_REALMNAME_SEPARATOR or "-";
+-- Escaped for use inside Lua patterns.
+local REALM_SEPARATOR_PATTERN = (REALM_SEPARATOR:gsub("%p", "%%%0"));
+local REALM_NORMALIZATION_PATTERN = "[%s%.%-]";
+
+---@return boolean
+function Utils.IsRegionalNames()
+	return IS_REGIONAL_NAMES;
+end
+
+---We prefer WOW_PROJECT_MAINLINE over WOW_PROJECT_CAMELOT, which might not be on Standard yet.
+local IS_MAINLINE = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE;
+
+---Game flavor, from the client's project ID rather than the regional-names capability.
+---@return "Retail"|"Forever"
+function Utils.GetFlavor()
+	return IS_MAINLINE and "Retail" or "Forever";
+end
+
 -- ============================================================================
 -- COLOR UTILITIES
 -- ============================================================================
@@ -46,6 +68,16 @@ end
 ---@return string
 function Utils.EscapePattern(text)
 	return text:gsub("([^%w])", "%%%1");
+end
+
+---Utils.StringContains Returns true if text contains substring as a literal (non-pattern) match.
+---Uses the native string.contains where it exists (Forever, 12.1.5+).
+---@param text string
+---@param substring string
+---@return boolean
+function Utils.StringContains(text, substring)
+	if string.contains then return string.contains(text, substring); end
+	return StringContains(text, substring);
 end
 
 ---NormalizeColors Ensures all color codes are properly closed
@@ -163,12 +195,14 @@ end
 ---@return string?
 function Utils.GetCharacterNameFromEmote(msg)
 	if type(msg) ~= "string" then return; end
-	return msg:match("^([^%s]+%-[^%s]+)");
+	if IS_REGIONAL_NAMES then return; end -- No realm to extract.
+	return msg:match("^([^%s]+" .. REALM_SEPARATOR_PATTERN .. "[^%s]+)");
 end
 
 -- RANDOM_ROLL_RESULT: "%s rolls %d (%d-%d)"
+-- Regional names contain a space, so the name can't be captured as a single non-space run.
 local SYSTEM_ROLL_PATTERN = RANDOM_ROLL_RESULT;
-SYSTEM_ROLL_PATTERN = SYSTEM_ROLL_PATTERN:gsub("%%%d?$?s", "(%%S+)");
+SYSTEM_ROLL_PATTERN = SYSTEM_ROLL_PATTERN:gsub("%%%d?$?s", IS_REGIONAL_NAMES and "(.-)" or "(%%S+)");
 SYSTEM_ROLL_PATTERN = SYSTEM_ROLL_PATTERN:gsub("%%%d?$?d", "(%%d+)");
 SYSTEM_ROLL_PATTERN = SYSTEM_ROLL_PATTERN:gsub("%(%(%%%d?$?d%+%)%-%(%%%d?$?d%+%)%)", "%%((%%d+)%%-(%%d+)%%)");
 
@@ -188,11 +222,27 @@ end
 -- UNIT / PLAYER UTILITIES
 -- ============================================================================
 
----GetUnitName Returns the normalized "Name-Realm" string for a given unit
+---Composes "Given Family" from a name and family name. Own-player names arrive combined, others split.
+---@param name string?
+---@param family string?
+---@return string?
+local function ComposeRegionalName(name, family)
+	if not canaccessvalue(name) or not canaccessvalue(family) then return; end
+	if not name or name == "" or name == UNKNOWNOBJECT then return; end
+
+	if name:find(SURNAME_SEPARATOR, 1, true) then return name; end
+	return NameUtil.GetFullNameWithoutRealm(name, family);
+end
+
+---GetUnitName Returns the normalized "Name-Realm" string for a given unit ("Given Family" in regional mode)
 ---@param unit string? Unit token
 ---@return string?
 function Utils.GetUnitName(unit)
 	local playerName, realm = UnitNameUnmodified(unit or "player");
+
+	if IS_REGIONAL_NAMES then
+		playerName = ComposeRegionalName(playerName, realm);
+	end
 
 	if not canaccessvalue(playerName) or not playerName or playerName == UNKNOWNOBJECT or playerName:len() == 0 then
 		if unit and unit ~= "player" then
@@ -201,37 +251,55 @@ function Utils.GetUnitName(unit)
 		return nil;
 	end
 
+	if IS_REGIONAL_NAMES then
+		return playerName;
+	end
+
 	if not realm or realm:len() == 0 then
 		realm = GetNormalizedRealmName();
 	end
 
 	if realm and realm:len() > 0 then
-		return playerName .. "-" .. realm;
+		return playerName .. REALM_SEPARATOR .. realm;
 	end
 
 	return nil;
 end
 
+---In regional mode, any non-empty name counts as qualified.
 ---@param name string?
 ---@return boolean
 function Utils.HasRealmSuffix(name)
-	return type(name) == "string" and name:find("%-.+") ~= nil;
+	if IS_REGIONAL_NAMES then return type(name) == "string" and name ~= ""; end
+	return type(name) == "string" and name:find(REALM_SEPARATOR_PATTERN .. ".+") ~= nil;
 end
 
 ---@param name string?
 ---@return boolean
 function Utils.IsSameRealmName(name)
 	if type(name) ~= "string" then return false; end
+	if IS_REGIONAL_NAMES then return true; end
 	local realm = GetNormalizedRealmName();
 	if not realm then return false; end
-	return name:find("%-" .. realm .. "$") ~= nil;
+	return name:find(REALM_SEPARATOR_PATTERN .. realm .. "$") ~= nil;
 end
 
 ---@param name string?
 ---@return string
 function Utils.StripRealmSuffix(name)
 	if type(name) ~= "string" then return ""; end
-	return name:match("^(.-)%-.+$") or name;
+	if IS_REGIONAL_NAMES then return name; end
+	return name:match("^(.-)" .. REALM_SEPARATOR_PATTERN .. ".+$") or name;
+end
+
+---Returns the name before the surname separator (regional) or before the realm suffix.
+---NameUtil only exists on regional clients such as Forever, so Standard strips the realm itself.
+---@param name string?
+---@return string
+function Utils.GetGivenName(name)
+	if type(name) ~= "string" then return ""; end
+	if not IS_REGIONAL_NAMES then return Utils.StripRealmSuffix(name); end
+	return NameUtil.SplitPlayerNameIntoParts(name) or name;
 end
 
 ---Appends the home realm to a name with none, normalized to match Chomp.NameMergedRealm.
@@ -239,8 +307,45 @@ end
 ---@return string
 function Utils.AddRealmSuffix(name)
 	if type(name) ~= "string" or name == "" then return ""; end
-	if name:find("-", 1, true) then return name; end
-	return name .. "-" .. GetRealmName():gsub("[%s%-%.]*", "");
+	if IS_REGIONAL_NAMES then return name; end
+	if name:find(REALM_SEPARATOR, 1, true) then return name; end
+	return name .. REALM_SEPARATOR .. GetRealmName():gsub(REALM_NORMALIZATION_PATTERN, "");
+end
+
+---True if sender is bareName plus a realm. Regional names only match exactly.
+---@param sender string
+---@param bareName string
+---@return boolean
+function Utils.MatchesBareName(sender, bareName)
+	if IS_REGIONAL_NAMES then return sender == bareName; end
+	return sender:match("^" .. bareName .. REALM_SEPARATOR_PATTERN) ~= nil;
+end
+
+---Builds a sender key from a name and realm (regional: "Given Family", no realm).
+---@param name string?
+---@param realm string?
+---@return string
+function Utils.ComposeSender(name, realm)
+	if IS_REGIONAL_NAMES then
+		return ComposeRegionalName(name, realm) or UNKNOWNOBJECT;
+	end
+	return string.join(REALM_SEPARATOR, name or UNKNOWNOBJECT, realm or GetNormalizedRealmName());
+end
+
+---Resolves a sender key from a GUID. Regional mode skips GetPlayerInfoByGUID, which only has the given name.
+---@param guid string
+---@return string?
+function Utils.GetSenderFromGUID(guid)
+	if IS_REGIONAL_NAMES then
+		return ComposeRegionalName(UnitNameFromGUID(guid));
+	end
+
+	local _, _, _, _, _, name, realm = GetPlayerInfoByGUID(guid);
+	if not name then return; end
+	if not realm or realm == "" then realm = GetNormalizedRealmName(); end
+	if not realm then return; end
+
+	return name .. REALM_SEPARATOR .. realm;
 end
 
 ---IsOwnPlayer Checks if the sender is the current player.
@@ -385,18 +490,20 @@ function Utils.ValidateLatestBuild()
 	return false;
 end
 
----FormatBuild Formats a build version as major.minor.patch
+---Formats an interface number as major.minor.patch (120100 is 12.1.0, 16001 is 1.60.1, etc).
 ---@param build string
 ---@return string
 local function FormatBuild(build)
-	build = tostring(build);
-	local major = tonumber(string.sub(build, 1, 2));
-	local minor = tonumber(string.sub(build, 3, 4));
-	local patch = tonumber(string.sub(build, 5, 6));
+	local interface = tonumber(string.match(tostring(build), "%d+"));
+	if not interface then return tostring(build); end
+
+	local major = math.floor(interface / 10000);
+	local minor = math.floor(interface / 100) % 100;
+	local patch = interface % 100;
 	return major .. "." .. minor .. "." .. patch;
 end
 
----OutputBuild Returns the addon's build version, optionally colorized
+---Returns the addon's build version, optionally colorized.
 ---@param colorized boolean
 ---@return string
 function Utils.OutputBuild(colorized)
@@ -508,7 +615,7 @@ function Utils.CreatePriorityString(targetPriority, focusTarget)
 end
 
 ---Determines if a feature should be considered newly added.
----Supports single version (0.3.0) or version range (0.3.0-0.4.0).
+---Supports a version (0.3.0) or range (0.3.0-0.4.0), and one build per flavor (120100,16001).
 ---@param buildAdded string
 ---@return boolean
 function Utils.CheckNewlyAdded(buildAdded)
@@ -517,7 +624,13 @@ function Utils.CheckNewlyAdded(buildAdded)
 
 	-- In dev builds, match solely on the Blizzard build number
 	if ED.Globals.addon_version == "@project-version@" then
-		return featureBuild == tostring(select(4, GetBuildInfo()));
+		local liveBuild = tostring(select(4, GetBuildInfo()));
+		for token in string.gmatch(featureBuild, "[^,%s]+") do
+			if token == liveBuild then
+				return true;
+			end
+		end
+		return false;
 	end
 
 	local rangeStart, rangeEnd = versionPart:match("^([^%-]+)%-(.+)$");

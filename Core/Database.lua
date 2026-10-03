@@ -144,6 +144,7 @@ local GLOBAL_IMPORT_EXCLUDED = {
 ---@field TargetOnly boolean?
 ---@field TargetPriority EavesdropperTargetPriority?
 ---@field TimestampBrackets boolean?
+---@field TitleBarFullName boolean?
 ---@field UpdateTitleBarWithName boolean?
 ---@field UseRPName boolean?
 ---@field UseRPFirstName boolean?
@@ -155,6 +156,20 @@ local GLOBAL_IMPORT_EXCLUDED = {
 ---@field WindowPosition EavesdropperWindowPosition?
 ---@field WindowSize EavesdropperWindowSize?
 ---@field Filters table<string, boolean>?
+
+---Profile defaults that differ per game flavor.
+local FLAVOR_DEFAULTS = {
+	HighlightKeywords = {
+		Retail  = "<firstname>, <lastname>, <oocname>",
+		Forever = "<firstname>, <lastname>, <oocfirstname>",
+	},
+	TitleBarFullName = {
+		Retail  = false,
+		Forever = true,
+	},
+};
+
+local FLAVOR = ED.Utils.GetFlavor();
 
 ---@type EavesdropperProfile
 local DEFAULT_PROFILE = {
@@ -176,7 +191,7 @@ local DEFAULT_PROFILE = {
 	HideInCombat = false,
 	HideWhenEmpty = false,
 	HighlightColor = { r = 0, g = 1, b = 0 },
-	HighlightKeywords = "<firstname>, <lastname>, <oocname>",
+	HighlightKeywords = FLAVOR_DEFAULTS.HighlightKeywords[FLAVOR],
 	HighlightMessages = false,
 	LockScroll = false,
 	LockTitleBar = false,
@@ -217,6 +232,7 @@ local DEFAULT_PROFILE = {
 	TargetOnly = false,
 	TargetPriority = Enums.TARGET_PRIORITY.PRIORITIZE_MOUSEOVER,
 	TimestampBrackets = true,
+	TitleBarFullName = FLAVOR_DEFAULTS.TitleBarFullName[FLAVOR],
 	UpdateTitleBarWithName = false,
 	UseRPName = true,
 	UseRPFirstName = false,
@@ -240,6 +256,7 @@ local CHAR_DEFAULTS = {
 
 Database.currentProfile = nil;
 Database.defaults = CopyTable(DEFAULT_PROFILE);
+Database.flavorDefaults = CopyTable(FLAVOR_DEFAULTS);
 Database.charDefaults = CopyTable(CHAR_DEFAULTS);
 Database.globalDefaults = CopyTable(GLOBAL_DEFAULTS);
 
@@ -615,6 +632,23 @@ function Database:ResetProfile()
 	return true;
 end
 
+---Clears the given keys from the current profile so their defaults apply.
+---@param keys EavesdropperSettingKey[]
+function Database:ResetSettings(keys)
+	local current = self.currentProfile;
+	if not current then return; end
+
+	for _, key in ipairs(keys) do
+		current[key] = nil;
+	end
+
+	ED.Frame:ApplyProfileSettings();
+
+	if ED.SettingsFrame then
+		ED.SettingsFrame:RefreshWidgets();
+	end
+end
+
 ---@alias EavesdropperSettingKey
 ---| "AdvNameDisplayMode"
 ---| "AdvNameDisplayModeOverride"
@@ -675,6 +709,7 @@ end
 ---| "TargetOnly"
 ---| "TargetPriority"
 ---| "TimestampBrackets"
+---| "TitleBarFullName"
 ---| "UpdateTitleBarWithName"
 ---| "UseRPName"
 ---| "UseRPFirstName"
