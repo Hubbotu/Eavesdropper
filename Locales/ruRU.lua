@@ -319,64 +319,64 @@ L = {
 	PROFILES_EXPORT_GLOBAL = "Общие",
 
 	-- Import/Export Dialog
-	IMPORTEXPORT_TITLE_EXPORT_PROFILE = "Export Profile", -- NEW
-	IMPORTEXPORT_TITLE_EXPORT_GLOBAL = "Export Global Settings", -- NEW
-	IMPORTEXPORT_TITLE_IMPORT = "Import Settings", -- NEW
+	IMPORTEXPORT_TITLE_EXPORT_PROFILE = "Экспорт профиля",
+	IMPORTEXPORT_TITLE_EXPORT_GLOBAL = "Экспорт общих настроек",
+	IMPORTEXPORT_TITLE_IMPORT = "Импорт настроек",
 
-	IMPORTEXPORT_INSTRUCTIONS_EXPORT = "Press |cnGREEN_FONT_COLOR:Ctrl+C|r to copy the string below, then paste it wherever you want to keep or share it.", -- NEW
-	IMPORTEXPORT_INSTRUCTIONS_IMPORT = "Paste a profile or global settings string below.", -- NEW
+	IMPORTEXPORT_INSTRUCTIONS_EXPORT = "Нажмите |cnGREEN_FONT_COLOR:Ctrl+C|r, чтобы скопировать строку ниже, затем вставьте её туда, где хотите сохранить или поделиться ею.",
+	IMPORTEXPORT_INSTRUCTIONS_IMPORT = "Вставьте строку профиля или общих настроек ниже.",
 
-	IMPORTEXPORT_DETECTED_PROFILE = "This is a |cnGREEN_FONT_COLOR:profile|r string. Choose which profile to import it into.", -- NEW
-	IMPORTEXPORT_DETECTED_GLOBAL = "This is a |cnGREEN_FONT_COLOR:global settings|r string. Importing it changes settings for every character and profile.", -- NEW
+	IMPORTEXPORT_DETECTED_PROFILE = "Это строка |cnGREEN_FONT_COLOR:профиля|r. Выберите, в какой профиль её импортировать.",
+	IMPORTEXPORT_DETECTED_GLOBAL = "Это строка |cnGREEN_FONT_COLOR:общих настроек|r. Её импорт изменит настройки для каждого персонажа и профиля.",
 
-	IMPORTEXPORT_NAME_LABEL = "Import As", -- NEW
-	IMPORTEXPORT_NAME_LABEL_HELP = "The profile the pasted settings are imported into.|n|nThis is filled in from the string automatically, but you can change it to import under another name.", -- NEW
-	IMPORTEXPORT_OVERWRITE = "Overwrite", -- NEW
-	IMPORTEXPORT_OVERWRITE_HELP = "Allow the import to replace a profile that already uses this name.|n|n|cnWARNING_FONT_COLOR:Note: Every setting in that profile will be replaced.|r", -- NEW
-	IMPORTEXPORT_BUTTON_IMPORT = "Import", -- NEW
-	IMPORTEXPORT_VERSION_DEV = "Dev", -- NEW
+	IMPORTEXPORT_NAME_LABEL = "Импортировать как",
+	IMPORTEXPORT_NAME_LABEL_HELP = "Профиль, в который будут импортированы вставленные настройки.|n|nЭто поле заполняется из строки автоматически, но вы можете изменить имя для импорта под другим названием.",
+	IMPORTEXPORT_OVERWRITE = "Перезаписать",
+	IMPORTEXPORT_OVERWRITE_HELP = "Разрешить импорту заменить профиль, который уже использует это имя.|n|n|cnWARNING_FONT_COLOR:Примечание: все настройки в этом профиле будут заменены.|r",
+	IMPORTEXPORT_BUTTON_IMPORT = "Импорт",
+	IMPORTEXPORT_VERSION_DEV = "Разраб.",
 
-	IMPORTEXPORT_CONFIRM_PROFILE = "Are you sure you want to import the profile '%s'?|n|nExported on |cnGREEN_FONT_COLOR:%s|r from version |cnGREEN_FONT_COLOR:%s|r.", -- NEW
-	IMPORTEXPORT_CONFIRM_OVERWRITE = "Are you sure you want to overwrite the profile '%s'?|n|nExported on |cnGREEN_FONT_COLOR:%s|r from version |cnGREEN_FONT_COLOR:%s|r.|n|n|cnWARNING_FONT_COLOR:Note: Every setting in that profile will be replaced.|r", -- NEW
-	IMPORTEXPORT_CONFIRM_GLOBAL = "Are you sure you want to import these global settings?|n|nExported on |cnGREEN_FONT_COLOR:%s|r from version |cnGREEN_FONT_COLOR:%s|r.|n|n|cnWARNING_FONT_COLOR:Note: This affects every character and profile.|r", -- NEW
-	IMPORTEXPORT_CONFIRM_RELOAD = "Global settings have been imported. Some of them only take effect after a reload.|n|nReload your interface now?", -- NEW
-	IMPORTEXPORT_CONFIRM_FLAVOR_DEFAULTS = "This profile was exported from another version of the game, which uses different defaults for some settings.|n|nSwitch those settings to this version's defaults?", -- NEW
+	IMPORTEXPORT_CONFIRM_PROFILE = "Вы уверены, что хотите импортировать профиль '%s'?|n|nЭкспортирован |cnGREEN_FONT_COLOR:%s|r из версии |cnGREEN_FONT_COLOR:%s|r.",
+	IMPORTEXPORT_CONFIRM_OVERWRITE = "Вы уверены, что хотите перезаписать профиль '%s'?|n|nЭкспортирован |cnGREEN_FONT_COLOR:%s|r из версии |cnGREEN_FONT_COLOR:%s|r.|n|n|cnWARNING_FONT_COLOR:Примечание: все настройки в этом профиле будут заменены.|r",
+	IMPORTEXPORT_CONFIRM_GLOBAL = "Вы уверены, что хотите импортировать эти общие настройки?|n|nЭкспортированы |cnGREEN_FONT_COLOR:%s|r из версии |cnGREEN_FONT_COLOR:%s|r.|n|n|cnWARNING_FONT_COLOR:Примечание: это повлияет на каждого персонажа и профиль.|r",
+	IMPORTEXPORT_CONFIRM_RELOAD = "Общие настройки были импортированы. Некоторые из них вступят в силу только после перезагрузки.|n|nПерезагрузить интерфейс сейчас?",
+	IMPORTEXPORT_CONFIRM_FLAVOR_DEFAULTS = "Этот профиль был экспортирован из другой версии игры, которая использует другие значения по умолчанию для некоторых настроек.|n|nПереключить эти настройки на значения по умолчанию для текущей версии?",
 
-	IMPORTEXPORT_SUCCESS_PROFILE = "Imported the profile '%s' and switched to it.", -- NEW
-	IMPORTEXPORT_SUCCESS_PROFILE_SKIPPED = "Imported the profile '%s' and switched to it. |cnWARNING_FONT_COLOR:%d |4setting:settings; could not be read and |4was:were; skipped.|r", -- NEW
-	IMPORTEXPORT_SUCCESS_GLOBAL = "Imported your global settings.", -- NEW
-	IMPORTEXPORT_SUCCESS_GLOBAL_SKIPPED = "Imported your global settings. |cnWARNING_FONT_COLOR:%d |4setting:settings; could not be read and |4was:were; skipped.|r", -- NEW
+	IMPORTEXPORT_SUCCESS_PROFILE = "Профиль '%s' успешно импортирован, выполнен переход на него.",
+	IMPORTEXPORT_SUCCESS_PROFILE_SKIPPED = "Профиль '%s' успешно импортирован, выполнен переход на него. |cnWARNING_FONT_COLOR:%d |4настройка:настройки:настроек; не удалось прочитать, и они были пропущены.|r",
+	IMPORTEXPORT_SUCCESS_GLOBAL = "Общие настройки успешно импортированы.",
+	IMPORTEXPORT_SUCCESS_GLOBAL_SKIPPED = "Общие настройки успешно импортированы. |cnWARNING_FONT_COLOR:%d |4настройку:настройки:настроек; не удалось прочитать, и они были пропущены.|r",
 
-	IMPORTEXPORT_ERROR_NAME_EMPTY = "Enter a name for the profile to import into.", -- NEW
-	IMPORTEXPORT_ERROR_NAME_TAKEN = "A profile named '%s' already exists. Choose another name, or enable 'Overwrite'.", -- NEW
-	IMPORTEXPORT_ERROR_WRITE_FAILED = "That string could not be imported.", -- NEW
-	IMPORTEXPORT_ERROR_EXPORT_FAILED = "Your settings could not be exported.", -- NEW
+	IMPORTEXPORT_ERROR_NAME_EMPTY = "Введите имя профиля для импорта.",
+	IMPORTEXPORT_ERROR_NAME_TAKEN = "Профиль с именем '%s' уже существует. Выберите другое имя или включите 'Перезаписать'.",
+	IMPORTEXPORT_ERROR_WRITE_FAILED = "Эту строку не удалось импортировать.",
+	IMPORTEXPORT_ERROR_EXPORT_FAILED = "Ваши настройки не удалось экспортировать.",
 
-	IMPORTEXPORT_ERROR_PEM_DECODE = "That does not look like an " .. title .. " string. Make sure you copied all of it, including the |cnGREEN_FONT_COLOR:-----BEGIN-----|r and |cnGREEN_FONT_COLOR:-----END-----|r lines.", -- NEW
-	IMPORTEXPORT_ERROR_PEM_LABEL = title .. " does not recognize that kind of string. It may have come from another addon, or from a newer version.", -- NEW
-	IMPORTEXPORT_ERROR_DECOMPRESS = "That string could not be unpacked and is most likely damaged or incomplete.", -- NEW
-	IMPORTEXPORT_ERROR_DESERIALIZE_CBOR = "That string could not be read and is most likely damaged.", -- NEW
-	IMPORTEXPORT_ERROR_PACKED_DATA_INVALID = "That string is malformed and cannot be imported.", -- NEW
-	IMPORTEXPORT_ERROR_SCHEMA_TOO_NEW = "That string was created by a newer version of " .. title .. " and cannot be read. Update the addon and try again.", -- NEW
+	IMPORTEXPORT_ERROR_PEM_DECODE = "Эта строка не похожа на данные " .. title .. ". Убедитесь, что вы скопировали её полностью, включая строки |cnGREEN_FONT_COLOR:-----BEGIN-----|r и |cnGREEN_FONT_COLOR:-----END-----|r.",
+	IMPORTEXPORT_ERROR_PEM_LABEL = title .. " не распознаёт этот тип строки. Возможно, она была создана другим аддоном или более новой версией.",
+	IMPORTEXPORT_ERROR_DECOMPRESS = "Эту строку не удалось распаковать, скорее всего, она повреждена или неполная.",
+	IMPORTEXPORT_ERROR_DESERIALIZE_CBOR = "Эту строку не удалось прочитать, скорее всего, она повреждена.",
+	IMPORTEXPORT_ERROR_PACKED_DATA_INVALID = "Эта строка имеет неверный формат и не может быть импортирована.",
+	IMPORTEXPORT_ERROR_SCHEMA_TOO_NEW = "Эта строка была создана более новой версией " .. title .. " и не может быть прочитана. Обновите аддон и попробуйте снова.",
 
 	-- Copy History Dialog
-	COPY_HISTORY = "Copy History", -- NEW
-	COPY_HISTORY_HELP = "Opens this window's chat history as selectable text you can copy out.", -- NEW
+	COPY_HISTORY = "Копировать историю",
+	COPY_HISTORY_HELP = "Открывает историю чата этого окна в виде выделяемого текста, который вы можете скопировать.",
 
-	COPYHISTORY_TITLE = "Copy History", -- NEW
-	COPYHISTORY_TIMESTAMP_FIXED = "Fixed", -- NEW
-	COPYHISTORY_TIMESTAMP_RELATIVE = "Relative", -- NEW
-	COPYHISTORY_TIMESTAMP_NONE = "None", -- NEW
-	COPYHISTORY_SELECT_ALL = "Select All", -- NEW
-	COPYHISTORY_FORMATTING_TITLE = "Formatting", -- NEW
-	COPYHISTORY_TIMESTAMPS_TITLE = "Timestamps", -- NEW
-	COPYHISTORY_TIMESTAMPS_HELP = "Choose how timestamps appear when you copy the text.|n|n- Fixed: Exact time (e.g. 19:53:22).|n- Relative: How long ago (e.g. 5m).|n- None: No timestamp.", -- NEW
-	COPYHISTORY_SHOW_NAMES_TITLE = "Show Names", -- NEW
-	COPYHISTORY_SHOW_NAMES_HELP = "Choose whether to include sender names in the copied text.|n|n- Window Default: Use this window's normal behavior.|n- Always On: Always add names.|n- Always Off: Never add names.|n|n|cnWARNING_FONT_COLOR:Note: Emotes and rolls always use their own name rules.|r", -- NEW
-	COPYHISTORY_SHOW_NAMES_WINDOW_DEFAULT = "Window Default", -- NEW
-	COPYHISTORY_SHOW_NAMES_ON = "Always On", -- NEW
-	COPYHISTORY_SHOW_NAMES_OFF = "Always Off", -- NEW
-	COPYHISTORY_NAME_DISPLAY_HELP = "Choose how names are formatted in the copied text.|n|n- Follow Profile Setting: Use your current profile's Name Display.|n- Full Name / First Name / Original (OOC) Name: Always use that variant.|n|n|cnWARNING_FONT_COLOR:Note: RP names need a compatible RP addon (TRP, MRP, XRP); without it, the in-game name is used.|r", -- NEW
+	COPYHISTORY_TITLE = "Копировать историю",
+	COPYHISTORY_TIMESTAMP_FIXED = "Точное время",
+	COPYHISTORY_TIMESTAMP_RELATIVE = "Относительное",
+	COPYHISTORY_TIMESTAMP_NONE = "Нет",
+	COPYHISTORY_SELECT_ALL = "Выбрать всё",
+	COPYHISTORY_FORMATTING_TITLE = "Форматирование",
+	COPYHISTORY_TIMESTAMPS_TITLE = "Отметки времени",
+	COPYHISTORY_TIMESTAMPS_HELP = "Выберите, как отметки времени будут отображаться при копировании текста.|n|n- Точное время: точное время события (например, 19:53:22).|n- Относительное: сколько времени прошло (например, 5м).|n- Нет: без отметок времени.",
+	COPYHISTORY_SHOW_NAMES_TITLE = "Показывать имена",
+	COPYHISTORY_SHOW_NAMES_HELP = "Выберите, нужно ли включать имена отправителей в скопированный текст.|n|n- По умолчанию для окна: использовать обычное поведение этого окна.|n- Всегда включено: всегда добавлять имена.|n- Всегда выключено: никогда не добавлять имена.|n|n|cnWARNING_FONT_COLOR:Примечание: для эмоций и бросков костей всегда применяются их собственные правила отображения имён.|r",
+	COPYHISTORY_SHOW_NAMES_WINDOW_DEFAULT = "По умолчанию для окна",
+	COPYHISTORY_SHOW_NAMES_ON = "Всегда включено",
+	COPYHISTORY_SHOW_NAMES_OFF = "Всегда выключено",
+	COPYHISTORY_NAME_DISPLAY_HELP = "Выберите формат имён в скопированном тексте.|n|n- Из настроек профиля: использовать формат отображения имён из текущего профиля.|n- Полное имя / Имя / Настоящее (OOC) имя: всегда использовать этот вариант.|n- Сокращённое / Полное РП-имя: использовать этот вариант (если применимо).|n|n|cnWARNING_FONT_COLOR:Примечание: для отображения РП-имён необходим совместимый РП-аддон (TRP, MRP, XRP); без него будет использоваться обычное игровое имя персонажа.|r",
 
 	ADDONINFO_BUILD = "|cnNORMAL_FONT_COLOR:Версия:|r %s",
 	ADDONINFO_BUILD_OUTDATED = title .. " не оптимизирован для этой версии игры.|n|n|cnWARNING_FONT_COLOR:Это может привести к ошибкам в работе аддона.|r",
@@ -385,26 +385,26 @@ L = {
 	PREVIEW_POST_TOOLTIP = "Смотреть превью версии на %s.",
 
 	-- About Tab
-	ABOUT_TITLE = "About", -- NEW
-	ADDONINFO_VERSION = "|cnNORMAL_FONT_COLOR:Version:|r %s", -- NEW
-	CLICK_TO_COPY = "|cnGREEN_FONT_COLOR:Click: Open link to copy|r", -- NEW
-	AUTHOR_COLON = "Author: ", -- NEW
-	VISIT_ADDON_PAGE_TOOLTIP = "Visit the addon page on %s.", -- NEW
-	RUN_CLICKABLE_COMMAND = "|cnGREEN_FONT_COLOR:Click: Run clickable command|r", -- NEW
+	ABOUT_TITLE = "О аддоне",
+	ADDONINFO_VERSION = "|cnNORMAL_FONT_COLOR:Версия:|r %s",
+	CLICK_TO_COPY = "|cnGREEN_FONT_COLOR:Клик: Открыть ссылку для копирования|r",
+	AUTHOR_COLON = "Автор: ",
+	VISIT_ADDON_PAGE_TOOLTIP = "Посетить страницу аддона на %s.",
+	RUN_CLICKABLE_COMMAND = "|cnGREEN_FONT_COLOR:Клик: Запустить интерактивную команду|r",
 
-	UNIT_POPUPS_EAVESDROPPER_OPTIONS_HEADER = "Eavesdropper Options", -- NEW
-	UNIT_POPUPS_EAVESDROP_ON = "Eavesdrop On", -- NEW
-	UNIT_POPUPS_EAVESDROP_ON_HELP = "Open a Dedicated Window for the current target.|n|n|cnWARNING_FONT_COLOR:Note: Disabled if the target already has a Dedicated Window.|r", -- NEW
-	UNIT_POPUPS_EAVESDROP_GROUP = "Eavesdrop Group", -- NEW
-	UNIT_POPUPS_EAVESDROP_GROUP_HELP = "Assign the current target to a specific Group Window or remove them from one.|n|n|cnWARNING_FONT_COLOR:Note: |cnGREEN_FONT_COLOR:Green group names|r indicate that the target is already a member of that group.|r", -- NEW
-	UNIT_POPUPS_EAVESDROP_GROUP_NEW = "Create New", -- NEW
-	UNIT_POPUPS_TOGGLE_MENTIONS_HELP = "Toggle the Mentions window, which lists every message that was aimed at you.|n|n- Catches keyword hits and emotes directed at you, even ones you missed in the moment.", -- NEW
+	UNIT_POPUPS_EAVESDROPPER_OPTIONS_HEADER = "Настройки Eavesdropper",
+	UNIT_POPUPS_EAVESDROP_ON = "Отслеживать цель",
+	UNIT_POPUPS_EAVESDROP_ON_HELP = "Открыть отдельное окно для текущей цели.|n|n|cnWARNING_FONT_COLOR:Примечание: недоступно, если для этой цели уже открыто отдельное окно.|r",
+	UNIT_POPUPS_EAVESDROP_GROUP = "Группа отслеживания",
+	UNIT_POPUPS_EAVESDROP_GROUP_HELP = "Добавить текущую цель в определённое групповое окно или удалить её из него.|n|n|cnWARNING_FONT_COLOR:Примечание: |cnGREEN_FONT_COLOR:зелёные названия групп|r указывают на то, что цель уже состоит в этой группе.|r",
+	UNIT_POPUPS_EAVESDROP_GROUP_NEW = "Создать новую",
+	UNIT_POPUPS_TOGGLE_MENTIONS_HELP = "Открыть/закрыть окно Упоминания, где собран список всех адресованных вам сообщений.|n|n- Перехватывает совпадения по ключевым словам и направленные на вас эмоции, даже если вы пропустили их в текущий момент.",
 
-	POPUP_EAVESDROP_GROUP = "Eavesdropper Group name.|nEnter to confirm.", -- NEW
-	POPUP_RESTORE_GROUP = "A group named \"%s\" with %d member(s) was closed earlier this session.|n|nRestore its members?", -- NEW
-	POPUP_RENAME_PROFILE = "Rename profile '%s'.|nEnter to confirm.", -- NEW
-	POPUP_COPY_PROFILE = "Name the new profile copied from '%s'.|nEnter to confirm.", -- NEW
-	POPUP_NEW_PROFILE = "Name the new profile.|nEnter to confirm.", -- NEW
+	POPUP_EAVESDROP_GROUP = "Название группы отслеживания.|nНажмите Enter для подтверждения.",
+	POPUP_RESTORE_GROUP = "Группа \"%s\" с %d |4участником:участниками:участниками; была закрыта ранее в этой сессии.|n|nВосстановить её участников?",
+	POPUP_RENAME_PROFILE = "Переименовать профиль '%s'.|nНажмите Enter для подтверждения.",
+	POPUP_COPY_PROFILE = "Введите имя для нового профиля, скопированного из '%s'.|nНажмите Enter для подтверждения.",
+	POPUP_NEW_PROFILE = "Введите имя для нового профиля.|nНажмите Enter для подтверждения.",
 
 	-- Message Prefixes (keep them shorthand)
 	MSG_PREFIX_PARTY = "Г",
