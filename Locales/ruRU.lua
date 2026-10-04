@@ -104,7 +104,7 @@ L = {
 	HISTORY_SIZE_HELP = "Максимальное количество строк, сохраняемых для каждого персонажа.|n|n|cnWARNING_FONT_COLOR:Примечание: высокие значения могут вызвать кратковременное падение FPS при обновлении окна истории.|r",
 
 	NAME_DISPLAY_MODE = "Отображение имен",
-	NAME_DISPLAY_MODE_HELP = "Выберите, как будут форматироваться имена персонажей внутри Eavesdropper.|n|n|cnWARNING_FONT_COLOR:Примечание: этот параметр отключен и по умолчанию использует значение 'Исходное имя (вне ролевой игры)', если не загружен подходящий RP-аддон (TRP, MRP, XRP).|r",
+	NAME_DISPLAY_MODE_HELP = "Выберите, как будут форматироваться имена персонажей внутри Eavesdropper.|n|n|cnWARNING_FONT_COLOR:Примечание: этот параметр отключен и по умолчанию использует значение 'Исходное имя (вне ролевой игры)', если не загружен подходящий РП-аддон (TRP, MRP, XRP).|r",
 	NAME_DISPLAY_MODE_FULL_NAME = "Полное имя",
 	NAME_DISPLAY_MODE_FIRST_NAME = "Только имя",
 	NAME_DISPLAY_MODE_ORIGINAL_NAME = "Оригинальное (OOC) имя",
@@ -123,7 +123,7 @@ L = {
 	NPC_DIALOGUE_AND_QUEST_TEXT_HELP = "Выберите, как будет отображаться имя вашего персонажа.",
 
 	NPC_AND_QUEST_NAME_DISPLAY = "Отображение имени в диалогах и заданиях",
-	NPC_AND_QUEST_NAME_DISPLAY_HELP = "Выберите, как будет форматироваться имя вашего персонажа в диалогах с НПС и текстах заданий.|n|n|cnWARNING_FONT_COLOR:Примечание: этот параметр по умолчанию использует значение 'Исходное имя (вне ролевой игры)', если не обнаружен ни один из поддерживаемых RP-аддонов (TRP, MRP или XRP).|r",
+	NPC_AND_QUEST_NAME_DISPLAY_HELP = "Выберите, как будет форматироваться имя вашего персонажа в диалогах с НПС и текстах заданий.|n|n|cnWARNING_FONT_COLOR:Примечание: этот параметр по умолчанию использует значение 'Исходное имя (вне ролевой игры)', если не обнаружен ни один из поддерживаемых РП-аддонов (TRP, MRP или XRP).|r",
 
 	USE_RP_NAME_FOR_QUEST_TEXT = "Форматировать текст заданий",
 	USE_RP_NAME_FOR_QUEST_TEXT_HELP = "Определяет, будет ли ваше имя в текстах заданий использовать выбранный вариант из 'Отображения имени в диалогах и заданиях' или ваше исходное игровое имя.|n|n|cnWARNING_FONT_COLOR:Примечание: для работы этой функции требуется активный аддон для изменения интерфейса диалогов (например, Dialogue UI).|r",
@@ -169,6 +169,8 @@ L = {
 
 	TITLE_BAR_TARGET_NAME = "Имя цели в заголовке",
 	TITLE_BAR_TARGET_NAME_HELP = "Заменяет название 'Eavesdropper' в заголовке на имя вашей текущей цели. Позволяет быстро понять, чью историю вы сейчас просматриваете.",
+	TITLE_BAR_FULL_NAME = "Полное имя в строке заголовка",
+	TITLE_BAR_FULL_NAME_HELP = "Показывает полное имя в строке заголовка вместо только лишь имени. Также применяется к отдельным окнам, в которых имя отображается всегда.|n|n- При наличии РП-данных это будет полное RP-имя, в противном случае - имя персонажа.",
 
 	WELCOME_MSG = "Сообщение при запуске",
 	WELCOME_MSG_HELP = "Показывать ли приветствие в чате при загрузке аддона.|n|n* Это общая настройка для всех профилей.",
@@ -266,7 +268,8 @@ L = {
 
 	KEYWORDS_LIST = "Список слов",
 	KEYWORDS_LIST_HELP = "Введите слова или фразы для выделения в истории чата.|n|nСпециальные теги:|n|cnGREEN_FONT_COLOR:<firstname>|r - ваше РП-имя|n|cnGREEN_FONT_COLOR:<lastname>|r - ваша РП-фамилия|n|cnGREEN_FONT_COLOR:<oocname>|r - ваш игровой никнейм|n|cnGREEN_FONT_COLOR:<class>|r - ваш РП-класс (или игровой)|n|cnGREEN_FONT_COLOR:<race>|r - ваша РП-раса (или игровая)|n|nПравила:|n- Разделяйте записи запятыми.|n- Регистр не учитывается (н-р, 'Герой' совпадет с 'герой').|n- Пробелы внутри фраз учитываются.|n|n|cnWARNING_FONT_COLOR:Примечание: пробелы до и после запятой игнорируются.|r",
-
+    KEYWORDS_LIST_HELP_OOC_PARTS = "|cnGREEN_FONT_COLOR:<oocfirstname>|r - Ваше игровое имя|n|cnGREEN_FONT_COLOR:<ooclastname>|r - Ваша игровая фамилия|n",
+	
 	KEYWORDS_HIGHLIGHT_COLOR = "Цвет выделения",
 	KEYWORDS_HIGHLIGHT_COLOR_HELP = "Выберите цвет, которым будут окрашены ключевые слова в тексте.",
 
@@ -277,43 +280,43 @@ L = {
 
 	-- Profiles Tab
 	PROFILES_TITLE = "Профили",
-	PROFILES_TITLE_HELP = "Store multiple setups and assign one to each character.", -- NEW
+	PROFILES_TITLE_HELP = "Сохраняйте несколько вариантов настроек и назначайте по одному каждому персонажу.",
 
-	PROFILES_TRANSFER = "Import & Export", -- NEW
-	PROFILES_TRANSFER_HELP = "Move settings in and out of the game as a text string.", -- NEW
+	PROFILES_TRANSFER = "Импорт и экспорт",
+	PROFILES_TRANSFER_HELP = "Переносите настройки в игру и из неё в виде текстовой строки.",
 
-	PROFILES_MANAGE = "Manage Profiles", -- NEW
-	PROFILES_MANAGE_HELP = "Manage your profiles. Hover over any profile to reveal more options.|n|n|cnWARNING_FONT_COLOR:Note: The 'Default' profile cannot be renamed or deleted.|r", -- NEW
+	PROFILES_MANAGE = "Управление профилями",
+	PROFILES_MANAGE_HELP = "Управляйте вашими профилями. Наведите курсор на любой профиль, чтобы увидеть дополнительные параметры.|n|n|cnWARNING_FONT_COLOR:Примечание: профиль 'По умолчанию' нельзя переименовать или удалить.|r",
 
-	PROFILES_NEWPROFILE = "%s |cnPURE_GREEN_COLOR:New Profile|r", -- NEW
+	PROFILES_NEWPROFILE = "%s |cnPURE_GREEN_COLOR:Новый профиль|r",
 
-	PROFILES_RESETBUTTON = "%s |cnNORMAL_FONT_COLOR:Reset Active Profile|r", -- NEW
-	PROFILES_RESETBUTTON_HELP = "Restore all settings in the active profile to their original defaults.", -- NEW
+	PROFILES_RESETBUTTON = "%s |cnNORMAL_FONT_COLOR:Сбросить активный профиль|r",
+	PROFILES_RESETBUTTON_HELP = "Восстановить исходные значения по умолчанию для всех настроек в активном профиле.",
 
 	PROFILES_DELETEPROFILE = "Удалить профиль",
-	PROFILES_DELETEPROFILE_HELP = "Permanently remove this profile from the database.|n|n- Any character using this profile is switched back to 'Default'.", -- NEW
+	PROFILES_DELETEPROFILE_HELP = "Навсегда удалить этот профиль из базы данных.|n|n- Все персонажи, использующие этот профиль, будут переключены обратно на профиль 'По умолчанию'.",
 
-	PROFILES_OPTIONS = "Profile Options", -- NEW
-	PROFILES_OPTIONS_HELP = "Copy or rename this profile.", -- NEW
+	PROFILES_OPTIONS = "Параметры профиля",
+	PROFILES_OPTIONS_HELP = "Скопировать или переименовать этот профиль.",
 
-	PROFILES_RENAMEPROFILE = "Rename Profile", -- NEW
-	PROFILES_RENAMEPROFILE_HELP = "Choose a new name for this profile.|n|n- Renaming the profile you are using keeps you on it.", -- NEW
+	PROFILES_RENAMEPROFILE = "Переименовать профиль",
+	PROFILES_RENAMEPROFILE_HELP = "Выберите новое имя для этого профиля.|n|n- Переименование используемого вами профиля оставит вас на нём.",
 
-	PROFILES_COPYPROFILE = "Copy Profile", -- NEW
-	PROFILES_COPYPROFILE_HELP = "Create a new profile holding a copy of this profile's settings, then switch to it.", -- NEW
+	PROFILES_COPYPROFILE = "Копировать профиль",
+	PROFILES_COPYPROFILE_HELP = "Создать новый профиль с копией настроек этого профиля и переключиться на него.",
 
-	PROFILES_CONFIRM_RESET = "Are you sure you want to reset the active profile to its original defaults?", -- NEW
-	PROFILES_CONFIRM_DELETE = "Are you sure you want to permanently delete the profile '%s'?", -- NEW
-	PROFILES_CONFIRM_DELETE_CURRENT = "Are you sure you want to permanently delete the profile '%s'?|n|nAll characters with this as their active profile will be reset to 'Default'.", -- NEW
+	PROFILES_CONFIRM_RESET = "Вы уверены, что хотите сбросить активный профиль до исходных настроек по умолчанию?",
+	PROFILES_CONFIRM_DELETE = "Вы уверены, что хотите навсегда удалить профиль '%s'?",
+	PROFILES_CONFIRM_DELETE_CURRENT = "Вы уверены, что хотите навсегда удалить профиль '%s'?|n|nВсе персонажи, у которых этот профиль выбран в качестве активного, будут переключены на профиль 'По умолчанию'.",
 
-	PROFILES_IMPORTBUTTON = "Import Settings", -- NEW
-	PROFILES_IMPORTBUTTON_HELP = "Import a profile or your global settings from a shareable text string.", -- NEW
+	PROFILES_IMPORTBUTTON = "Импортировать настройки",
+	PROFILES_IMPORTBUTTON_HELP = "Импортировать профиль или ваши общие настройки из текстовой строки обмена.",
 
-	PROFILES_EXPORTBUTTON = "Export Settings", -- NEW
-	PROFILES_EXPORTBUTTON_HELP = "Export the current profile or your global settings to a text string you can keep or share outside of the game.|n|nEach is exported separately.", -- NEW
+	PROFILES_EXPORTBUTTON = "Экспортировать настройки",
+	PROFILES_EXPORTBUTTON_HELP = "Экспортировать текущий профиль или ваши общие настройки в текстовую строку, которую можно сохранить или отправить вне игры.|n|nКаждая категория экспортируется отдельно.",
 
-	PROFILES_EXPORT_PROFILE = "Profile", -- NEW
-	PROFILES_EXPORT_GLOBAL = "Global", -- NEW
+	PROFILES_EXPORT_PROFILE = "Профиль",
+	PROFILES_EXPORT_GLOBAL = "Общие",
 
 	-- Import/Export Dialog
 	IMPORTEXPORT_TITLE_EXPORT_PROFILE = "Export Profile", -- NEW
@@ -337,6 +340,7 @@ L = {
 	IMPORTEXPORT_CONFIRM_OVERWRITE = "Are you sure you want to overwrite the profile '%s'?|n|nExported on |cnGREEN_FONT_COLOR:%s|r from version |cnGREEN_FONT_COLOR:%s|r.|n|n|cnWARNING_FONT_COLOR:Note: Every setting in that profile will be replaced.|r", -- NEW
 	IMPORTEXPORT_CONFIRM_GLOBAL = "Are you sure you want to import these global settings?|n|nExported on |cnGREEN_FONT_COLOR:%s|r from version |cnGREEN_FONT_COLOR:%s|r.|n|n|cnWARNING_FONT_COLOR:Note: This affects every character and profile.|r", -- NEW
 	IMPORTEXPORT_CONFIRM_RELOAD = "Global settings have been imported. Some of them only take effect after a reload.|n|nReload your interface now?", -- NEW
+	IMPORTEXPORT_CONFIRM_FLAVOR_DEFAULTS = "This profile was exported from another version of the game, which uses different defaults for some settings.|n|nSwitch those settings to this version's defaults?", -- NEW
 
 	IMPORTEXPORT_SUCCESS_PROFILE = "Imported the profile '%s' and switched to it.", -- NEW
 	IMPORTEXPORT_SUCCESS_PROFILE_SKIPPED = "Imported the profile '%s' and switched to it. |cnWARNING_FONT_COLOR:%d |4setting:settings; could not be read and |4was:were; skipped.|r", -- NEW
